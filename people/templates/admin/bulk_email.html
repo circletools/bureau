@@ -1,0 +1,44 @@
+{% extends "admin/base_site.html" %}
+
+{% load i18n admin_urls static admin_modify %}
+
+{% block content %}
+
+	{% csrf_token %}
+	<h1>
+		Bulk E-Mail
+	</h1>
+
+	<h3>
+		Hier ist eine Liste der E-Mail-Adressen von den Erziehungsberechtigten aller ausgewählten Schüler:
+	</h3>
+
+	<p style="border:1px solid gray; padding:10px 15px; border-radius: 5px; background-color:#ddd; margin: 30px 0px;">
+		{% for person in guardians %}
+			{{ person.email_address }},
+		{% endfor %}
+	<p>
+
+	{% if orphans %}
+		<h3>Achtung! Für diese Schüler wurde kein Erziehungsberechtigter mit E-Mail-Adresse gefunden:</h3>
+		<ul>
+			{% for person in orphans %}
+			<li>
+				{{ person }}
+			</li>
+			{% endfor %}
+		</ul>
+	{% endif %}
+
+
+	<h3>Diese Schüler wurden ausgewählt:</h3>
+	<ul>
+		{% for person in students %}
+		<li>
+			{{ person }}
+		</li>
+		{% endfor %}
+	</ul>
+
+
+{% endblock %}

@@ -1,0 +1,32 @@
+{% extends "admin/base.html" %}
+{% load static from staticfiles %} # This might be just {% load static %} in your ENV
+
+{% block title %}{{ title }} | {{ site_title|default:_('Django site admin') }}{% endblock %}
+
+{% block extrastyle %}{{ block.super }}<link rel="stylesheet" type="text/css" href="{% static "css/admin-extra.css" %}" />
+<style>
+	th.column-entry_nr,
+	th.column-get_gender_short,
+	th.column-is_sibling,
+	th.column-is_sibling,
+	th.column-application_received,
+	th.column-obligatory_conference,
+	th.column-parent_dialog,
+	th.column-confirmation_status,
+	th.column-sitting
+	{
+		background-color: #eee;
+		max-width: 7em;
+		overflow: hidden;
+		font-size: 70%;
+	}
+</style>
+
+{% endblock %}
+
+{% block branding %}
+<h1 id="site-name"><a href="{% url 'admin:index' %}">{{ site_header|default:_('Django administration') }}</a></h1>
+{% endblock %}
+
+{% block nav-global %}{% endblock %}
+

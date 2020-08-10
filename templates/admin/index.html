@@ -1,0 +1,53 @@
+{% extends "admin/index.html" %}
+
+{% block content %}
+{{ block.super }}
+{% endblock %}
+
+{% block sidebar %}
+{{ block.super }}
+
+<div class="module">
+	<table>
+		<caption>EXPORT</caption>
+		<tbody>
+			<tr>
+				<th scope="row">
+					<a href="/people/adressliste">SchülerInnen/Eltern Adressliste</a>
+				</th>
+				<td>(Excel)</td>
+				<td></td>
+			</tr>
+			<tr>
+				<th scope="row">
+					<a href="/people/students_csv/active">Aktive SchülerInnen</a>
+				</th>
+				<td>(CSV)</td>
+				<td></td>
+			</tr>
+			<tr>
+				<th scope="row">
+					<a href="/people/student_report">Zu-/Abgänge lfd. Halbjahr</a>
+				</th>
+				<td>(Excel)</td>
+				<td></td>
+			</tr>
+			<tr>
+				<th scope="row">
+					<a href="/people/level_report">Bericht Klassenstufen</a>
+				</th>
+				<td>(vorläufig)</td>
+				<td></td>
+			</tr>
+			<tr>
+				<th scope="row">
+					<a href="/people/society_csv">Trägervereinsmitglieder</a>
+				</th>
+				<td>(CSV)</td>
+				<td></td>
+			</tr>
+		</tbody>
+	</table>
+</div>
+
+{% endblock %}

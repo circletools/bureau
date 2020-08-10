@@ -1,0 +1,186 @@
+{# people/templates/students.html #}
+{% load staticfiles %}
+{% load i18n %}
+<!doctype html>
+<html>
+    <head>
+        <title>Datenblatt</title>
+        <link rel="stylesheet" href="{% static 'admin/css/base.css' %}" /> 
+
+        <style type="text/css" >
+            @page 
+            {
+                size: auto;
+                margin: 0mm;
+            }
+
+            body {
+                margin-top: 10em;
+                margin-left: 10em;
+            }
+
+            #logo {
+                position: absolute;
+                top: 5em;
+                right: 10em;
+            }
+
+            h1 {
+                font-size: 20pt;
+                margin-bottom: 2em;
+            }
+
+            table {
+                width: calc( 100% - 10em );
+                margin-bottom: 2em;
+            }
+
+            td {
+                padding-left: 0;
+                padding: 0.7em;
+                font-size: 11pt;
+                border-bottom: .2pt solid black;
+                border-top: .2pt solid black;
+                line-height: 120%;
+            }
+
+            td.label {
+                font-size: 9pt;
+            }
+        </style>
+
+    </head>
+    <body>
+        <img id="logo" src="{{ SCHOOL_LOGO }}" width="300px" alt="{{ SCHOOL_NAME }}" />
+
+        <h1>Schülerakte <br/>
+            <b>{{ student.short_or_first_name }} {{ student.name }}</b>
+        </h1>
+
+        <table>
+
+            <tr>
+                <td class="label">
+                    {% trans "Entry #" %}
+                </td>
+                <td>
+                    {{ student.entry_nr }}
+                </td>
+            </tr>
+
+            <tr>
+                <td class="label">
+                    {% trans "Last Name" %}
+                </td>
+                <td>
+                    {{ student.name }}
+                </td>
+            </tr>
+            <tr>
+                <td class="label">
+                    {% trans "First Name" %}
+                </td>
+                <td>
+                    {{ student.first_name }}
+                </td>
+            </tr>
+
+            <tr>
+                <td class="label">
+                    {% trans "Date of Birth" %}
+                </td>
+                <td>
+                    {{ student.dob }}
+                </td>
+            </tr>
+            <tr>
+                <td class="label">
+                    {% trans "Place of Birth" %}
+                </td>
+                <td>
+                    {{ student.pob }}
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="label">
+                    {% trans "Gender" %}
+                </td>
+                <td>
+                    {{ student.gender_verbose }}
+                </td>
+            </tr>
+
+            <tr>
+                <td class="label">
+                    {% trans "Citizenship" %}
+                </td>
+                <td>
+                    {{ student.citizenship }}
+                </td>
+            </tr>
+
+            <tr>
+                <td class="label">
+                    {% trans "Religious Denomination" %}
+                </td>
+                <td>
+                    {{ student.denomination }}
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="label">
+                    {% trans "Postal Address" %}
+                </td>
+                <td>
+                    {{ student.address.street }}<br/>
+                    {{ student.address.postal_code }} {{ student.address.city }} {{ student.address.alternative }}<br/>
+                    {{ student.address.country }}
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="label">
+                    {% trans "Guardians" %}
+                </td>
+                <td>
+                    {% for guardian in student.guardians.all %}
+                                    {{ guardian.name }},
+                                    {{ guardian.first_name }} <br>
+
+                                    {{ guardian.phone_number }} {{ guardian.cellphone_number }}<br>
+                                    {{ guardian.email_address }}<br>
+                                    {{ guardian.address }}<br>
+                                    <br>
+                    {% endfor %}
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="label">
+                    {% trans "First day at this School" %}
+                </td>
+                <td>
+                    {{ student.first_day }}
+                </td>
+            </tr>
+            <tr>
+                <td class="label">
+                    {% trans "Last day at this School" %}
+                </td>
+                <td>
+                    {{ student.last_day|default:"" }}
+                </td>
+            </tr>
+        </table>
+
+        <script>
+       //     window.onload = function() { window.print(); }
+        </script>
+    </body>
+</html>

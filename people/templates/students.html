@@ -1,0 +1,81 @@
+{# people/templates/students.html #}
+{% load staticfiles %}
+<!doctype html>
+<html>
+    <head>
+        <title>Students</title>
+        <link rel="stylesheet" href="{% static 'admin/css/base.css' %}" /> 
+    </head>
+    <body>
+        <div id="container">
+
+            <div id="content" class="flex">
+
+                <h1>Telefonliste (SchülerInnen) 
+                </h1>
+                    <div class="object-tools">
+                        Stand: {% now "j. F Y" %}
+                    </div>
+
+                <div id="content-main">
+                    <table width="100%">
+                        <tr>
+                            <th>Name</th>
+                            <th></th>
+                            <th>Telefon</th>
+                            <th>Mobil</th>
+                            <th>E-Mail</th>
+                        </tr>
+                        {% for student in students|dictsort:"first_name" %}
+                            <tr>
+                                <td>
+                                    {{ student.first_name }} {{ student.name }}
+                                </td>
+                                {% with adr=student.address %}
+                                <td>
+                                    {{ adr.street }}<br/>{{ adr.postal_code }} {{ adr.city }}
+                                    {{ adr.alternative }}
+                                </td>
+
+                                {% endwith %}
+                            </tr>
+                            {% for guardian in student.guardians.all %}
+                                <tr>
+                                    <td></td>
+                                    <td></td>
+                                    <td>
+                                            {{ guardian.first_name }} 
+                                    </td>
+                                    <td>
+                                            {{ guardian.phone_number }} 
+                                    </td>
+                                    <td>
+                                            {{ guardian.cellphone_number }}<br>
+                                    </td>
+                                    <td>
+                                            {{ guardian.email_address }}<br>
+                                    </td>
+                                </tr>
+                            {% endfor %}
+                                <!--
+                                {% with family=student.family %}
+                                    <td>
+                                        {% for phone in family.phonenumber_set.all %}
+                                            {{ phone.number }} ({{ phone.description }})<br>
+                                        {% endfor %}
+                                    </td>
+                                    <td>
+                                        {% for mail in family.emailaddress_set.all %}
+                                            {{ mail.address }} ({{ mail.description }})<br>
+                                        {% endfor %}
+                                    </td>
+                                {% endwith %}
+                                -->
+                        {% endfor %}
+                    </table>
+                </div>
+
+            </div>
+        </div>
+    </body>
+</html>

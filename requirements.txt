@@ -1,0 +1,5 @@
+django==2.1.7
+django-cors-headers==2.5.2
+django-rest-framework==0.1.0
+xlsxwriter==1.1.5
+uwsgi

@@ -1,0 +1,67 @@
+{% extends "admin/base_site.html" %}
+
+{% load i18n admin_urls static admin_modify %}
+
+{% block extrastyle %}{{ block.super }}<link rel="stylesheet" type="text/css" href="{% static "admin/css/forms.css" %}" />{% endblock %}
+
+{% block content %}
+<form action="" method="post">
+	{% csrf_token %}
+	<h1>
+		{{_('Change Status')}}
+	</h1>
+
+	<p>
+		{{_('This Action will change the status of all selected students.')}}
+	<p>
+	<p>
+		<b>{{_('Warning:')}}</b> {{_('This cannot be easily undone!')}}
+	</p>
+
+	<fieldset class="module aligned">
+		<div class="form-row field-status">
+			<div>
+				<label class="required" for="status">{{_('New Status:')}}</label>
+			</div>
+			<div>
+				{{ form.status }}
+			</div>
+		</div>
+	</fieldset>
+
+	<input type="hidden" name="action" value="change_status" />
+	<input type="submit" name="apply" value="{{_('Change Status')}}"/>
+
+
+<h2>
+	{{_('New Status will be applied to:')}}
+</h2>
+
+	<table>
+		<thead>
+			<tr>
+				<th>{{_('Student')}}</th>
+				<th>{{_('Current Status')}}</th>
+			</tr>
+		</thead>
+		<tbody>
+
+		{% for student in students %}
+			<tr>
+				<td>
+					{{ student }}
+				</td>
+				<td>
+					{{ student.get_status_display }}
+				</td>
+			</tr>
+
+			<input type="hidden" name="_selected_action" value="{{ student.id }}" />
+		{% endfor %}
+
+		</tbody>
+	</table>
+
+</form>  
+
+{% endblock %}
