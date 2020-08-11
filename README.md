@@ -34,7 +34,7 @@ simple school management database
 	- add 'config.settings.common.settings' to TEMPLATES[OPTIONS][context_processors]
 	- add sensible GLOBAL_SETTINGS
 
-- edit config/settings/urls.py
+- edit config/urls.py
 	- add
 		```
 		from django.views.generic.base import RedirectView
@@ -46,9 +46,9 @@ simple school management database
 		```url(r'^people/', include('people.urls')),```
 
 - makemessages, compilemessages
-	- ```$ mv people/locale/de/LC_MESSAGES/django.po dproject/locale/de/LC_MESSAGES/```
-	- ```$ python manage.py makemessages```
-	- ```$ python manage.py compilemessages```
+	- ```$ cd people```
+	- ```$ django-admin.py makemessages```
+	- ```$ django-admin.py compilemessages```
 
 - migrate
 	- ```$ python manage.py makemigrations people```
