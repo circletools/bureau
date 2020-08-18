@@ -11,6 +11,8 @@ from django.http import HttpResponse
 from io import BytesIO
 from xlsxwriter.workbook import Workbook
 
+from django.db.models import Count
+
 @login_required
 def index(request):
     return render(request, 'students.html', 
@@ -402,3 +404,25 @@ def student_report_row(sheet, student, row):
 	sheet.write(row, 8, "%r" % student.tmp_level)
 	sheet.write(row, 9, student.first_day)
 	sheet.write(row, 10, student.last_day)
+
+@login_required
+def mentor_report(request):
+	response = HttpResponse(content_type="text/plain; charset=utf-8")
+
+	today = date.today().strftime("%Y-%m-%d")
+	response.write( "Mentor*i-Liste Stand "+today+"\n");
+
+	# iterate team
+	for contact in Contact.objects.all().filter(is_teammember=True):
+
+		mentees = contact.mentees.filter(status="active")
+
+		if mentees.count() > 0:
+			response.write( "\n\n"+contact.name+", "+contact.first_name+"\n\n");
+
+			for mentee in mentees.all():
+				response.write( "\t"+mentee.name+", "+mentee.first_name+"\n");
+
+
+
+	return response;

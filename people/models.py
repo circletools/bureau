@@ -126,6 +126,8 @@ class Student(models.Model):
     address = models.ForeignKey(Address, verbose_name=_("Postal Address"), null=True, blank=True, on_delete=models.CASCADE)
     guardians = models.ManyToManyField(Contact, verbose_name=_("Guardians"), limit_choices_to={"kind":"prs"}, blank=True, related_name="students")
 
+    mentor = models.ForeignKey(Contact, verbose_name=_("Mentor"), null=True, blank=True, limit_choices_to={"kind":"prs","is_teammember":True}, on_delete=models.CASCADE, related_name="mentees")
+
     district_school = models.CharField(_("District School"), max_length=200, blank=True, null=True)
 
     after_school_care = models.BooleanField(_("in After-school Care"), default=False)

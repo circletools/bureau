@@ -137,7 +137,7 @@ class StudentAdmin(admin.ModelAdmin):
     def get_fieldsets(self, request, obj=None):
         fieldsets = (
                 (None, {
-                    "fields": ("short_name", "name", "first_name", "status", "remark", "dob", "pob", "address", "guardians_links")
+                    "fields": ("short_name", "name", "first_name", "status", "remark", "dob", "pob", "address", "guardians_links", "mentor")
                 }),)
 
         if not obj or (obj and (obj.status == "in_admission_procedure" or obj.status == "intent_declared" or obj.status == "cancelled")):
@@ -274,13 +274,13 @@ class ContactAdmin(admin.ModelAdmin):
     list_display = ("name","first_name","kind","phone_number","cellphone_number","email_address")
     search_fields = ["name", "first_name"]
     list_filter = ("kind","is_teammember")
-    readonly_fields = ("student_links",)
+    readonly_fields = ("student_links","mentee_links")
 
     def get_fields(self, request, obj=None):
 #            return ("name", "first_name", "kind", "address", "phone_number", "cellphone_number", "email_address", "on_address_list", "is_teammember", "team_email_address", "note", "student_links")
         fields = ("name", "first_name", "kind", "address", "phone_number", "cellphone_number", "email_address", "on_address_list", "is_teammember", "is_societymember")
         if obj and obj.is_teammember:
-            fields += ("team_email_address",)
+            fields += ("team_email_address","mentee_links")
         fields += ("note", "student_links")
         return fields
 
@@ -293,6 +293,17 @@ class ContactAdmin(admin.ModelAdmin):
             links.append('<a href="%s">%s</a>' % (change_url, student))
         return format_html("<br>".join(links));
     student_links.short_description = _("Students")
+
+    def mentee_links(self, obj):
+        mentees = obj.mentees.all()
+
+        links = [];
+        for mentee in mentees:
+            change_url = urls.reverse("admin:people_student_change", args=(mentee.id,))
+            links.append('<a href="%s">%s</a>' % (change_url, mentee))
+        return format_html("<br>".join(links));
+
+    mentee_links.short_description = _("Mentees")
 
 admin.site.register(Contact, ContactAdmin)
 
