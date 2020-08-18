@@ -338,6 +338,7 @@ def student_report(request):
 	sheet.write(row, 8, "Klassenstufe")
 	sheet.write(row, 9, "Tag des Eintritts")
 	sheet.write(row, 10, "Tag der Entlassung")
+	sheet.write(row, 11, "Abschluss")
 	sheet.set_row(row, 12, format_bold)
 	row += 1
 
@@ -404,6 +405,7 @@ def student_report_row(sheet, student, row):
 	sheet.write(row, 8, "%r" % student.tmp_level)
 	sheet.write(row, 9, student.first_day)
 	sheet.write(row, 10, student.last_day)
+	sheet.write(row, 11, student.degree)
 
 @login_required
 def mentor_report(request):

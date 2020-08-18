@@ -160,6 +160,7 @@ class StudentAdmin(admin.ModelAdmin):
                     "classes":("collapse",),
                     "fields":(
                     "first_day", "last_day",
+                    "degree",
                     "first_enrollment",
                     "level_ofs", "level_ref",
                     "calc_level"

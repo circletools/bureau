@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2020-08-18 10:22+0000\n"
+"POT-Creation-Date: 2020-08-18 10:29+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -18,377 +18,386 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 
-#: admin.py:39
+#: people/admin.py:39
 msgid "All"
 msgstr "Alle"
 
-#: admin.py:51 models.py:96
+#: people/admin.py:51 people/models.py:96
 msgid "Status"
 msgstr "Status"
 
-#: admin.py:61 models.py:139
+#: people/admin.py:61 people/models.py:141
 msgid "Enrollment Year"
 msgstr "Einschulungsjahr"
 
-#: admin.py:144
+#: people/admin.py:144
 msgid "Application"
 msgstr "Bewerbungsverfahren"
 
-#: admin.py:152
+#: people/admin.py:152
 msgid "Waitlist"
 msgstr "Warteliste"
 
-#: admin.py:159 admin.py:219
+#: people/admin.py:159 people/admin.py:220
 msgid "Class Level"
 msgstr "Klassenstufe"
 
-#: admin.py:167
+#: people/admin.py:168
 msgid "Formalities"
 msgstr "Formalitäten"
 
-#: admin.py:176
+#: people/admin.py:177
 msgid "Edit Guardians"
 msgstr "Erziehungsberechtigte bearbeiten"
 
-#: admin.py:189
+#: people/admin.py:190
 msgid "Print"
 msgstr "Drucken"
 
-#: admin.py:190
+#: people/admin.py:191
 msgid "Cover Sheet"
 msgstr "Datenblatt"
 
-#: admin.py:201 models.py:127 templates/studentcoversheet.html:148
+#: people/admin.py:202 people/models.py:129
+#: people/templates/studentcoversheet.html:148
 msgid "Guardians"
 msgstr "Erziehungsberechtigte"
 
-#: admin.py:205 models.py:39
+#: people/admin.py:206 people/models.py:39
 msgid "Name"
 msgstr "Name"
 
-#: admin.py:209 models.py:110 templates/studentcoversheet.html:108
+#: people/admin.py:210 people/models.py:110
+#: people/templates/studentcoversheet.html:108
 msgid "Gender"
 msgstr "Geschlecht"
 
-#: admin.py:239
+#: people/admin.py:240
 #, python-format
 msgid "Changed status (to '%(status)s') on %(count)s students"
 msgstr "Status bei %(count)s Schüler*i auf '%(status)s' geändert "
 
-#: admin.py:246 templates/admin/change_status.html:11
-#: templates/admin/change_status.html:33
+#: people/admin.py:247 people/templates/admin/change_status.html:11
+#: people/templates/admin/change_status.html:33
 msgid "Change Status"
 msgstr "Status ändern"
 
-#: admin.py:266
+#: people/admin.py:267
 msgid "Export Guardian EMail addresses"
 msgstr "EMail-Liste der Erziehungsberechtigten anzeigen"
 
-#: admin.py:295 models.py:70
+#: people/admin.py:296 people/models.py:70
 msgid "Students"
 msgstr "Schüler*i"
 
-#: admin.py:306
+#: people/admin.py:307
 msgid "Mentees"
 msgstr ""
 
-#: admin.py:327
+#: people/admin.py:328
 msgid "Students at this Address"
 msgstr "Schüler*i an dieser Adresse"
 
-#: admin.py:336
+#: people/admin.py:337
 msgid "Contacts at this Address"
 msgstr "Kontakte an dieser Adresse"
 
-#: models.py:10 models.py:43 models.py:126 templates/studentcoversheet.html:136
+#: people/models.py:10 people/models.py:43 people/models.py:128
+#: people/templates/studentcoversheet.html:136
 msgid "Postal Address"
 msgstr "Postadresse"
 
-#: models.py:11
+#: people/models.py:11
 msgid "Postal Addresses"
 msgstr "Postadressen"
 
-#: models.py:14
+#: people/models.py:14
 msgid "Street Address"
 msgstr "Straße"
 
-#: models.py:15
+#: people/models.py:15
 msgid "Postal Code"
 msgstr "PLZ"
 
-#: models.py:16
+#: people/models.py:16
 msgid "City"
 msgstr "Ort"
 
-#: models.py:18
+#: people/models.py:18
 msgid "Alternative"
 msgstr "Alternativ"
 
-#: models.py:20
+#: people/models.py:20
 msgid "Country"
 msgstr "Land"
 
-#: models.py:28
+#: people/models.py:28
 msgid "Contact"
 msgstr "Kontakt"
 
-#: models.py:29
+#: people/models.py:29
 msgid "Contacts"
 msgstr "Kontakte"
 
-#: models.py:33
+#: people/models.py:33
 msgid "Other"
 msgstr "Andere"
 
-#: models.py:34
+#: people/models.py:34
 msgid "Person"
 msgstr "Person"
 
-#: models.py:35
+#: people/models.py:35
 msgid "Company"
 msgstr "Firma"
 
-#: models.py:36
+#: people/models.py:36
 msgid "Organization"
 msgstr "Organisation/Amt/etc"
 
-#: models.py:40 models.py:99 templates/studentcoversheet.html:81
+#: people/models.py:40 people/models.py:99
+#: people/templates/studentcoversheet.html:81
 msgid "First Name"
 msgstr "Vorname"
 
-#: models.py:41
+#: people/models.py:41
 msgid "Kind"
 msgstr "Art"
 
-#: models.py:44
+#: people/models.py:44
 msgid "Phone"
 msgstr "Festnetz"
 
-#: models.py:45
+#: people/models.py:45
 msgid "Mobile"
 msgstr "Mobil"
 
-#: models.py:46
+#: people/models.py:46
 msgid "EMail"
 msgstr "EMail"
 
-#: models.py:48
+#: people/models.py:48
 msgid "Appears on Adress List"
 msgstr "In der Adressliste anzeigen"
 
-#: models.py:50
+#: people/models.py:50
 msgid "Team Member"
 msgstr "Teammitglied"
 
-#: models.py:51
+#: people/models.py:51
 msgid "Society Member"
 msgstr "Trägervereinsmitglied"
 
-#: models.py:52
+#: people/models.py:52
 msgid "Team-EMail"
 msgstr "Team-EMail"
 
-#: models.py:54 models.py:155
+#: people/models.py:54 people/models.py:157
 msgid "Note"
 msgstr "Notiz"
 
-#: models.py:69 models.py:161 templates/admin/change_status.html:43
+#: people/models.py:69 people/models.py:163
+#: people/templates/admin/change_status.html:43
 msgid "Student"
 msgstr "Schüler*i"
 
-#: models.py:74
+#: people/models.py:74
 msgid "male"
 msgstr "männlich"
 
-#: models.py:75
+#: people/models.py:75
 msgid "female"
 msgstr "weiblich"
 
-#: models.py:76
+#: people/models.py:76
 msgid "other/unspecified"
 msgstr "anderes/ohne Angabe"
 
-#: models.py:80
+#: people/models.py:80
 msgid "active"
 msgstr "Aktiv"
 
-#: models.py:81
+#: people/models.py:81
 msgid "in admission procedure"
 msgstr "Bewerbungsverfahren"
 
-#: models.py:82
+#: people/models.py:82
 msgid "waitlisted"
 msgstr "Warteliste"
 
-#: models.py:83
+#: people/models.py:83
 msgid "intent declared"
 msgstr "Absichtserklärung"
 
-#: models.py:84
+#: people/models.py:84
 msgid "rejected/expired"
 msgstr "abgesagt/abgelaufen"
 
-#: models.py:85
+#: people/models.py:85
 msgid "alumn"
 msgstr "Ehemalig"
 
-#: models.py:86
+#: people/models.py:86
 msgid "special"
 msgstr "Ausnahme"
 
-#: models.py:95 templates/studentcoversheet.html:64
+#: people/models.py:95 people/templates/studentcoversheet.html:64
 msgid "Entry #"
 msgstr "Eingangsnummer"
 
-#: models.py:98 templates/studentcoversheet.html:73
+#: people/models.py:98 people/templates/studentcoversheet.html:73
 msgid "Last Name"
 msgstr "Nachname"
 
-#: models.py:100
+#: people/models.py:100
 msgid "Short Name"
 msgstr "Rufname"
 
-#: models.py:105
+#: people/models.py:105
 msgid "Remark"
 msgstr "Anmerkung"
 
-#: models.py:107 templates/studentcoversheet.html:90
+#: people/models.py:107 people/templates/studentcoversheet.html:90
 msgid "Date of Birth"
 msgstr "Geburtsdatum"
 
-#: models.py:108 templates/studentcoversheet.html:98
+#: people/models.py:108 people/templates/studentcoversheet.html:98
 msgid "Place of Birth"
 msgstr "Geburtsort"
 
-#: models.py:115 templates/studentcoversheet.html:126
+#: people/models.py:115 people/templates/studentcoversheet.html:126
 msgid "Religious Denomination"
 msgstr "Religionszugehörigkeit"
 
-#: models.py:116 templates/studentcoversheet.html:117
+#: people/models.py:116 people/templates/studentcoversheet.html:117
 msgid "Citizenship"
 msgstr "Staatsbürgerschaft"
 
-#: models.py:117
+#: people/models.py:117
 msgid "Household Language"
 msgstr "Sprache im Elternhaus"
 
-#: models.py:119 templates/studentcoversheet.html:166
+#: people/models.py:119 people/templates/studentcoversheet.html:166
 msgid "First day at this School"
 msgstr "Erster Tag an dieser Schule"
 
-#: models.py:120 templates/studentcoversheet.html:174
+#: people/models.py:120 people/templates/studentcoversheet.html:174
 msgid "Last day at this School"
 msgstr "Letzter Tag an dieser Schule"
 
-#: models.py:122
+#: people/models.py:122
+msgid "Degree (when leaving this School)"
+msgstr "Abschluss (bei Verlassen der Schule)"
+
+#: people/models.py:124
 msgid "First Enrollment (at any School)"
 msgstr "Erste Einschulung"
 
-#: models.py:123
+#: people/models.py:125
 msgid "Class Level (at Reference)"
 msgstr "Klassenstufe (bei Referenz)"
 
-#: models.py:124
+#: people/models.py:126
 msgid "Class Level Reference"
 msgstr "Klassenstufen-Referenz"
 
-#: models.py:129
+#: people/models.py:131
 msgid "Mentor"
 msgstr "Mentor*i"
 
-#: models.py:131
+#: people/models.py:133
 msgid "District School"
 msgstr "Einzugsschule"
 
-#: models.py:133
+#: people/models.py:135
 msgid "in After-school Care"
 msgstr "in Nachmittagsbetreuung"
 
-#: models.py:134
+#: people/models.py:136
 msgid "Privacy Policy Agreement"
 msgstr "Datenschutzerklärung"
 
-#: models.py:135
+#: people/models.py:137
 msgid "Vaccination Policy Agreement"
 msgstr "Infektionsschutzgesetz"
 
-#: models.py:136
+#: people/models.py:138
 msgid "Sibling"
 msgstr "Geschwisterkind"
 
-#: models.py:140
+#: people/models.py:142
 msgid "Enrollment Age"
 msgstr "Einschulungsalter"
 
-#: models.py:141
+#: people/models.py:143
 msgid "Waitlist Position"
 msgstr "Position Warteliste"
 
-#: models.py:143
+#: people/models.py:145
 msgid "Application received"
 msgstr "Bewerbung erhalten"
 
-#: models.py:144
+#: people/models.py:146
 msgid "was present at obligatory parent conference"
 msgstr "Obl. EA"
 
-#: models.py:145
+#: people/models.py:147
 msgid "Parent Dialog"
 msgstr "Elterngespräch"
 
-#: models.py:146
+#: people/models.py:148
 msgid "Confirmation"
 msgstr "(vorl.) Zusage"
 
-#: models.py:147
+#: people/models.py:149
 msgid "Sitting In"
 msgstr "Hospitation"
 
-#: models.py:156
+#: people/models.py:158
 msgid "Notes"
 msgstr "Notizen"
 
-#: models.py:158
+#: people/models.py:160
 msgid "Content"
 msgstr "Inhalt"
 
-#: models.py:159
+#: people/models.py:161
 msgid "Date"
 msgstr "Datum"
 
-#: models.py:160
+#: people/models.py:162
 msgid "Archived"
 msgstr "Archiviert"
 
-#: templates/admin/base_site.html:4
+#: people/templates/admin/base_site.html:4
 msgid "Django site admin"
 msgstr ""
 
-#: templates/admin/base_site.html:28
+#: people/templates/admin/base_site.html:28
 msgid "Django administration"
 msgstr ""
 
-#: templates/admin/change_status.html:15
+#: people/templates/admin/change_status.html:15
 msgid "This Action will change the status of all selected students."
 msgstr "Diese Aktion ändert den Status bei allen ausgewählten Schüler*i"
 
-#: templates/admin/change_status.html:18
+#: people/templates/admin/change_status.html:18
 msgid "Warning:"
 msgstr "Warnung:"
 
-#: templates/admin/change_status.html:18
+#: people/templates/admin/change_status.html:18
 msgid "This cannot be easily undone!"
 msgstr "Dies kann nicht einfach rückgängig gemacht werden!"
 
-#: templates/admin/change_status.html:24
+#: people/templates/admin/change_status.html:24
 msgid "New Status:"
 msgstr "Neuer Status:"
 
-#: templates/admin/change_status.html:37
+#: people/templates/admin/change_status.html:37
 msgid "New Status will be applied to:"
 msgstr "Neuer Status wird bei folgenden Schüler*i gesetzt:"
 
-#: templates/admin/change_status.html:44
+#: people/templates/admin/change_status.html:44
 msgid "Current Status"
 msgstr "Derzeitiger Status"
 

@@ -119,6 +119,8 @@ class Student(models.Model):
     first_day = models.DateField(_("First day at this School"), blank=True, null=True)
     last_day = models.DateField(_("Last day at this School"), blank=True, null=True)
 
+    degree = models.CharField(_("Degree (when leaving this School)"), max_length=200, blank=True, null=True)
+
     first_enrollment = models.IntegerField(_("First Enrollment (at any School)"), blank=True, null=True)
     level_ofs = models.IntegerField(_("Class Level (at Reference)"), blank=True, null=True)
     level_ref = models.IntegerField(_("Class Level Reference"), blank=True, null=True)
