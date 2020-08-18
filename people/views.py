@@ -25,6 +25,11 @@ def studentcoversheet(request, student_id):
         {'student': student })
 
 @login_required
+def presence_form(request):
+    return render(request, 'presence_form.html', 
+        {'students': Student.objects.filter(status="active") })
+
+@login_required
 def list_excel(request):
 	output = BytesIO()
 	book = Workbook(output)

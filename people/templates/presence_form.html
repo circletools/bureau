@@ -1,0 +1,112 @@
+{# people/templates/students.html #}
+{% load staticfiles %}
+{% load i18n %}
+<!doctype html>
+<html>
+    <head>
+        <title>An-/Abmeldeliste</title>
+        <link rel="stylesheet" href="{% static 'admin/css/base.css' %}" /> 
+
+        <style type="text/css" >
+            @page 
+            {
+                size: auto;
+            }
+            
+            body
+            {
+              margin: 15mm;
+            }
+
+            h1 {
+                font-size: 20pt;
+                margin-bottom: 2em;
+            }
+
+            table {
+                width: 100%;
+                margin-bottom: 2em;
+            }
+
+            thead th {
+                border-bottom: .2pt solid black;
+            }
+
+            td, th {
+                padding-left: 0;
+                padding: 0.7em;
+                font-size: 11pt;
+                border: .2pt solid black;
+                line-height: 120%;
+            }
+
+            td.label {
+                font-size: 9pt;
+            }
+
+            td.space {
+                border: .2pt solid black;
+                width: 4em;
+            }
+        </style>
+
+    </head>
+    <body>
+        <h1>An-/Abmeldeliste für {% now "Y-m-d" %}
+        </h1>
+        <table>
+            <thead>
+                <tr>
+                    <th class="student">
+                        Schüler*i
+                    </th>
+                    <th class="space">
+                        anwesend
+                    </th>
+                    <th class="space">
+                        entschuldigt/krank
+                    </th>
+                    <th class="space">
+                        unentschuldigt abwesend
+                    </th>
+                </tr>
+            </thead>
+            <tbody>
+
+            {% for student in students %}
+                <tr>
+                    <td class="student">
+                        {{ student.name }}, {% firstof student.short_name student.first_name %}
+                    </td>
+                    <td class="space">
+                    </td>
+                    <td class="space">
+                    </td>
+                    <td class="space">
+                    </td>
+                </tr>
+            {% endfor %}
+            <!--
+{% for i in '0123456789012345678901234567890123456789'|make_list %}
+                <tr>
+                    <td class="student">
+                        Beispiel, Schüler, zum Testen
+                    </td>
+                    <td class="space">
+                    </td>
+                    <td class="space">
+                    </td>
+                    <td class="space">
+                    </td>
+                </tr>
+{% endfor %}
+        -->
+            </tbody>     
+        </table>
+
+        <script>
+       //     window.onload = function() { window.print(); }
+        </script>
+
+    </body>
+</html>

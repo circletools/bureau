@@ -86,6 +86,7 @@ router.register(r'contact', ContactViewSet, "contact")
 urlpatterns = [
 #    url(r'^$', views.index, name='index'),
     url(r'^adressliste$', views.list_excel, name='adressliste'),
+    url(r'^presence_form$', views.presence_form, name='prasenzliste'),
 #    url(r'^students$', views.students_csv, name='students'),
     url(r'^studentcoversheet/(?P<student_id>\w+)/$', views.studentcoversheet, name='studentcoversheet'),
     url(r'^students_csv/(?P<status>\w+)/$', views.students_csv),
