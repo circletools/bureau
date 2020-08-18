@@ -18,6 +18,9 @@ simple school management database
 	- ```$ cd ~/bureau/dproject/templates```
 	- ```$ ln -s ~/bureau.git/templates/admin .```
 
+- install requirements
+    - ```~bureau$ pip3 install -r ../bureau.git/requirements.txt```
+
 - edit config/settings/common.py,
 
 	- add the "settings" module from bureau.git/bureau/settings.py
@@ -44,6 +47,12 @@ simple school management database
 		```url(r'^$', RedirectView.as_view(url='/admin')),```
 	- add to urlpatterns:
 		```url(r'^people/', include('people.urls')),```
+	- add at bottom of file:
+		```
+		admin.site.site_header = settings.GLOBAL_SETTINGS['SCHOOL_NAME']+" Bureau"
+		admin.site.index_title = "Verwaltung"
+		```
+
 
 - makemessages, compilemessages
 	- ```$ cd people```
@@ -54,4 +63,10 @@ simple school management database
 	- ```$ python manage.py makemigrations people```
 	- ```$ python manage.py migrate```
 
+
+## Caveats
+
+### SSL error on djangoeurope.com
+
+if you get a 500 Bad Request / "Contradictory scheme headers" error after enabling an SSL certificate on djangoeurope, please observe https://panel.djangoeurope.com/support/doc/http2https
 
