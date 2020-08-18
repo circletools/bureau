@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2020-08-18 10:29+0000\n"
+"POT-Creation-Date: 2020-08-18 11:49+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -30,75 +30,75 @@ msgstr "Status"
 msgid "Enrollment Year"
 msgstr "Einschulungsjahr"
 
-#: people/admin.py:144
+#: people/admin.py:143
 msgid "Application"
 msgstr "Bewerbungsverfahren"
 
-#: people/admin.py:152
+#: people/admin.py:151
 msgid "Waitlist"
 msgstr "Warteliste"
 
-#: people/admin.py:159 people/admin.py:220
+#: people/admin.py:158 people/admin.py:219
 msgid "Class Level"
 msgstr "Klassenstufe"
 
-#: people/admin.py:168
+#: people/admin.py:167
 msgid "Formalities"
 msgstr "Formalitäten"
 
-#: people/admin.py:177
+#: people/admin.py:176
 msgid "Edit Guardians"
 msgstr "Erziehungsberechtigte bearbeiten"
 
-#: people/admin.py:190
+#: people/admin.py:189
 msgid "Print"
 msgstr "Drucken"
 
-#: people/admin.py:191
+#: people/admin.py:190
 msgid "Cover Sheet"
 msgstr "Datenblatt"
 
-#: people/admin.py:202 people/models.py:129
+#: people/admin.py:201 people/models.py:129
 #: people/templates/studentcoversheet.html:148
 msgid "Guardians"
 msgstr "Erziehungsberechtigte"
 
-#: people/admin.py:206 people/models.py:39
+#: people/admin.py:205 people/models.py:39
 msgid "Name"
 msgstr "Name"
 
-#: people/admin.py:210 people/models.py:110
+#: people/admin.py:209 people/models.py:110
 #: people/templates/studentcoversheet.html:108
 msgid "Gender"
 msgstr "Geschlecht"
 
-#: people/admin.py:240
+#: people/admin.py:239
 #, python-format
 msgid "Changed status (to '%(status)s') on %(count)s students"
 msgstr "Status bei %(count)s Schüler*i auf '%(status)s' geändert "
 
-#: people/admin.py:247 people/templates/admin/change_status.html:11
+#: people/admin.py:246 people/templates/admin/change_status.html:11
 #: people/templates/admin/change_status.html:33
 msgid "Change Status"
 msgstr "Status ändern"
 
-#: people/admin.py:267
+#: people/admin.py:266
 msgid "Export Guardian EMail addresses"
 msgstr "EMail-Liste der Erziehungsberechtigten anzeigen"
 
-#: people/admin.py:296 people/models.py:70
+#: people/admin.py:295 people/models.py:70
 msgid "Students"
 msgstr "Schüler*i"
 
-#: people/admin.py:307
+#: people/admin.py:306
 msgid "Mentees"
 msgstr ""
 
-#: people/admin.py:328
+#: people/admin.py:327
 msgid "Students at this Address"
 msgstr "Schüler*i an dieser Adresse"
 
-#: people/admin.py:337
+#: people/admin.py:336
 msgid "Contacts at this Address"
 msgstr "Kontakte an dieser Adresse"
 
@@ -139,7 +139,7 @@ msgstr "Kontakt"
 msgid "Contacts"
 msgstr "Kontakte"
 
-#: people/models.py:33
+#: people/models.py:33 people/models.py:170
 msgid "Other"
 msgstr "Andere"
 
@@ -160,7 +160,7 @@ msgstr "Organisation/Amt/etc"
 msgid "First Name"
 msgstr "Vorname"
 
-#: people/models.py:41
+#: people/models.py:41 people/models.py:180
 msgid "Kind"
 msgstr "Art"
 
@@ -196,7 +196,7 @@ msgstr "Team-EMail"
 msgid "Note"
 msgstr "Notiz"
 
-#: people/models.py:69 people/models.py:163
+#: people/models.py:69 people/models.py:163 people/models.py:182
 #: people/templates/admin/change_status.html:43
 msgid "Student"
 msgstr "Schüler*i"
@@ -361,13 +361,42 @@ msgstr "Notizen"
 msgid "Content"
 msgstr "Inhalt"
 
-#: people/models.py:161
+#: people/models.py:161 people/models.py:177
 msgid "Date"
 msgstr "Datum"
 
 #: people/models.py:162
 msgid "Archived"
 msgstr "Archiviert"
+
+#: people/models.py:167
+msgid "Tuition"
+msgstr "Schulgeld"
+
+#: people/models.py:168
+msgid "for Materials"
+msgstr "Materialgeld"
+
+#: people/models.py:169
+msgid "Afternoon Care"
+msgstr "Nachmittagsbetreuung"
+
+#: people/models.py:174
+msgid "Payment"
+msgstr "Zahlung"
+
+#: people/models.py:175
+msgid "Payments"
+msgstr "Zahlungen"
+
+#: people/models.py:178
+#| msgid "Country"
+msgid "Amount"
+msgstr "Betrag"
+
+#: people/models.py:181
+msgid "Comment"
+msgstr "Anmerkung"
 
 #: people/templates/admin/base_site.html:4
 msgid "Django site admin"
@@ -427,9 +456,6 @@ msgstr "Derzeitiger Status"
 #, python-format
 #~ msgid "%(model_name)s with this %(field_label)s already exists."
 #~ msgstr "%(model_name)s mit dieser/m %(field_label)s existiert bereits."
-
-#~ msgid "Duration"
-#~ msgstr "Dauer"
 
 #~ msgid "Email address"
 #~ msgstr "EMail Adresse"

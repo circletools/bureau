@@ -36,6 +36,28 @@ DEBUG = True
 ALLOWED_HOSTS = ["localhost","bureau"]
 
 
+# See: https://docs.djangoproject.com/en/dev/ref/settings/#language-code
+LANGUAGE_CODE = 'de'
+
+LANGUAGES = [
+#    ('en', 'English'),
+    ('de', 'German'),
+]
+
+# See: https://docs.djangoproject.com/en/dev/ref/settings/#site-id
+SITE_ID = 1
+
+# See: https://docs.djangoproject.com/en/dev/ref/settings/#use-i18n
+USE_I18N = True
+
+LOCALE_PATHS = [
+    BASE_DIR+'/locale',
+]
+
+# See: https://docs.djangoproject.com/en/dev/ref/settings/#use-l10n
+USE_L10N = True
+
+
 # Application definition
 
 INSTALLED_APPS = [

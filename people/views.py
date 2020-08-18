@@ -2,7 +2,7 @@ from django.utils.translation import ugettext as _
 from django.contrib.auth.decorators import login_required
 from django.conf import settings
 
-from .models import Student, Contact
+from .models import Student, Contact, Payment
 from django.shortcuts import render, get_object_or_404
 
 import csv
@@ -11,7 +11,7 @@ from django.http import HttpResponse
 from io import BytesIO
 from xlsxwriter.workbook import Workbook
 
-from django.db.models import Count
+from django.db.models import Count, Sum, Avg
 
 @login_required
 def index(request):
@@ -108,7 +108,7 @@ def students_csv(request, status="active"):
 
 	writer = csv.writer(response)
 
-	writer.writerow(["SchülerInnen mit Status '"+status+"'"]);
+	writer.writerow(["Schüler*i mit Status '"+status+"'"]);
 	writer.writerow(["Name", "Vorname", "Geburtsdatum", "Klassenstufe", "Strasse", "Ort", "Erziehungsberechtigte"])
 
 	for student in Student.objects.all().filter(status=status):
@@ -128,6 +128,101 @@ def students_csv(request, status="active"):
 			student.address.street, student.address.postal_code+" "+student.address.city,
 			" und ".join(guardian_names)])
 
+	return response;
+
+
+@login_required
+def payments_csv(request, year):
+#	response = HttpResponse(content_type="text/plain")
+	response = HttpResponse(content_type="text/csv")
+	response["Content-Disposition"] = "attachment;filename=payments.csv"
+
+	writer = csv.writer(response)
+
+	writer.writerow(["Zahlungen im Jahr '"+year+"'"]);
+	writer.writerow(["Name", "Vorname", "Geburtsdatum", "Klassenstufe", "Strasse", "Ort", "Erziehungsberechtigte", "Schulgeld", "Nachmittagsbetreuung", "Materialgeld"])
+
+	for student in Student.objects.all():
+		guardian_names = [];
+		first_guardian_name = ""
+		for guardian in student.guardians.all():
+			if first_guardian_name == guardian.name:
+				guardian_names.append(guardian.first_name);
+			else:
+				first_guardian_name = guardian.name;
+				guardian_names.append(guardian.first_name + " " + guardian.name);
+
+		guardian_names.reverse()
+
+		payments = Payment.objects.filter(student_id=student.id, date__year=year)
+
+		by_kind = payments.values("kind").annotate(total=Sum("amount"))
+		k = {}
+		for v in by_kind:
+			k[v["kind"]] = v["total"]
+
+		if by_kind.count() > 0:
+			writer.writerow([student.name, student.first_name, 
+				student.dob.strftime("%d.%m.%Y"), calc_level(student,date.today()),
+				student.address.street, student.address.postal_code+" "+student.address.city,
+				" und ".join(guardian_names),
+				str(k.get("tuition",0)), 
+				str(k.get("afternoon_care",0)), 
+				str(k.get("materials",0)), 
+				])
+
+	return response;
+
+@login_required
+def payments_avg(request, year):
+#	response = HttpResponse(content_type="text/plain")
+	response = HttpResponse(content_type="text/csv")
+	response["Content-Disposition"] = "attachment;filename=payments.csv"
+
+	writer = csv.writer(response)
+
+	date_from = "%s-07-01" % year
+	date_to = "%s-06-30" % str(int(year)+1)
+
+	writer.writerow(["Errechnung Durchschnittliches Schulgeld im Schuljahr "+year+"/"+str(int(year)+1), date_from, date_to]);
+	writer.writerow(["Name", "Vorname", "Schulgeld", "Nachmittagsbetreuung", "Materialgeld"])
+
+	total = {}
+	n = 0;
+
+	for student in Student.objects.all():
+
+		payments = Payment.objects.filter(student_id=student.id, date__range=(date_from, date_to))
+
+		by_kind = payments.values("kind").annotate(total=Sum("amount"))
+		k = {}
+		for v in by_kind:
+			k[v["kind"]] = v["total"]
+			if not (v["kind"] in total):
+				total[v["kind"]] = 0;
+			total[v["kind"]] += v["total"]
+
+		if by_kind.count() > 0:
+			n = n+1
+			writer.writerow([student.name, student.first_name, 
+				str(k.get("tuition",0)), 
+				str(k.get("afternoon_care",0)), 
+				str(k.get("materials",0)), 
+				])
+
+
+	writer.writerow([ str(n)+" Schüler*i", "", 
+		str(k.get("tuition",total["tuition"])), 
+		str(k.get("afternoon_care",total["afternoon_care"])), 
+		str(k.get("materials",total["materials"])), 
+		])
+	writer.writerow(["Schnitt","", 
+		str(k.get("tuition",total["tuition"]/n)), 
+		str(k.get("afternoon_care",total["afternoon_care"]/n)), 
+		str(k.get("materials",total["materials"]/n)), 
+		])
+
+	print (total);
 	return response;
 
 
@@ -172,7 +267,7 @@ def level_report(request):
 		# iterate a school year, produce a list of dates, one for each month
 		year = settings.GLOBAL_SETTINGS['LEVEL_REPORT_FIRST_YEAR']
 		report_duration = settings.GLOBAL_SETTINGS['LEVEL_REPORT_YEARS']
-		first_month_of_schoolyear = 6
+		first_month_of_schoolyear = 7
 		dates = list(map(
 					lambda month: date(year + math.floor(month/12), (month%12)+1, 1), 
 					range(first_month_of_schoolyear-1, first_month_of_schoolyear+(12*report_duration))))
@@ -308,7 +403,7 @@ def student_report(request):
 
 	output = BytesIO()
 	book = Workbook(output)
-	sheet = book.add_worksheet("SchülerInnen")
+	sheet = book.add_worksheet("Schüleri")
 
 	format_normal = book.add_format({"font_size": 10, "bold": False, "num_format": "dd.mm.yyyy"})
 	format_bold = book.add_format({"font_size": 10, "bold": True, "num_format": "dd.mm.yyyy"})

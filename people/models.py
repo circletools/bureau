@@ -161,4 +161,22 @@ class Note(models.Model):
     date = models.DateField(_("Date"), blank=True, null=True)
     archived = models.BooleanField(_("Archived"), blank=True, default=False)
     student = models.ForeignKey(Student, verbose_name=_("Student"), null=True, blank=True, on_delete=models.CASCADE)
-#    user = ForeignKey
+
+class Payment(models.Model):
+    PAYMENT_KIND_CHOICES = [
+        ("tuition", _("Tuition")),
+        ("materials", _("for Materials")),
+        ("afternoon_care", _("Afternoon Care")),
+        ("other", _("Other")),
+    ]
+
+    class Meta:
+        verbose_name = _("Payment")
+        verbose_name_plural = _("Payments")
+
+    student = models.ForeignKey(Student, verbose_name=_("Student"), limit_choices_to={"status":"active"}, on_delete=models.CASCADE)
+
+    date = models.DateField(_("Date"))
+    amount = models.FloatField(_("Amount"))
+    kind = models.CharField(_("Kind"), max_length=20, choices=PAYMENT_KIND_CHOICES)
+    comment = models.CharField(_("Comment"), blank=True, null=True, max_length=255,)

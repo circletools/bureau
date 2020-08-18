@@ -1,4 +1,5 @@
 {% extends "admin/index.html" %}
+{% load paymentyears %}
 
 {% block content %}
 {{ block.super }}
@@ -58,6 +59,20 @@
 					<a href="/people/society_csv">Trägervereinsmitglieder</a>
 				</th>
 				<td>(CSV)</td>
+				<td></td>
+			</tr>
+			<tr>
+				<th scope="row">
+					Alle Zahlungen {% paymentyears "/people/payments_csv" %}
+				</th>
+				<td>(CSV)</td>
+				<td></td>
+			</tr>
+			<tr>
+				<th scope="row">
+					Durchschnittliche Zahlungen {% paymentyears "/people/payments_avg" %}
+				</th>
+				<td>(Text)</td>
 				<td></td>
 			</tr>
 		</tbody>

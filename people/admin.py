@@ -16,6 +16,8 @@ from django.shortcuts import render
 from django.http import HttpResponseRedirect
 from django.contrib import messages
 
+import calendar
+
 # set a default filter option [https://stackoverflow.com/questions/851636/default-filter-in-django-admin]
 class DefaultListFilter(admin.SimpleListFilter):
     all_value = '_all'
@@ -95,7 +97,6 @@ class NoteInline(admin.TabularInline):
 
 class StudentAdmin(admin.ModelAdmin):
 
-
     model = Student
     def get_list_display(self, request, obj=None):
         status = request.GET.get("status__exact", "active")
@@ -129,7 +130,7 @@ class StudentAdmin(admin.ModelAdmin):
 
     search_fields = ["entry_nr", "first_name", "name"]
     filter_horizontal = ("guardians",)
-    readonly_fields = ("guardians_links","calc_level","cover_sheet_link")
+    readonly_fields = ("guardians_links","calc_level","cover_sheet_link","payments_link")
     inlines = [
        NoteInline,
     ]
@@ -180,7 +181,7 @@ class StudentAdmin(admin.ModelAdmin):
                     "guardians",
                 )}),
                 (None, {
-                        "fields":("cover_sheet_link",)
+                        "fields":("cover_sheet_link","payments_link")
                     }),
             )
 
@@ -200,6 +201,11 @@ class StudentAdmin(admin.ModelAdmin):
         	links.append('<a href="%s">%s</a>' % (change_url, guardian))
         return format_html("<br>".join(links));
     guardians_links.short_description = _("Guardians")
+
+    def payments_link(self, obj):
+        return format_html('<a class="button" href="/admin/people/payment/?student__id__exact=%s">%s</a>' % (obj.id, _("List")));
+    payments_link.short_description = _("Payments")
+    payments_link.allow_tags = True
 
     def get_full_name(self, obj):
         return obj.first_name + " " + obj.name;
@@ -339,3 +345,44 @@ class AddressAdmin(admin.ModelAdmin):
 
 
 admin.site.register(Address, AddressAdmin)
+
+import datetime
+from django.template.defaultfilters import date as _date
+
+class LatestMonthsFilter(DefaultListFilter):
+    title = _('Month')
+    parameter_name = 'month'
+
+    def lookups(self, request, model_admin):
+        months = []
+        today = date.today();
+        current_month = today.month;
+        for i in range(-6,1):
+            m = (current_month + i)
+            y = today.year
+            if m <= 0:
+                m += 12
+                y -= 1
+            d = datetime.date(y, m, 1)
+            months.append(("%i-%i" % (m, y), _date(d,"F Y")));
+        return months;
+
+    def queryset(self, request, queryset):
+        if self.value() and self.value() != "_all":
+            d = self.value().split("-")
+            month = int(d[0])
+            year = int(d[1]);
+            return queryset.filter(date__month=month, date__year=year)
+
+        return queryset
+
+    def default_value(self):
+        return "_all"
+
+class PaymentAdmin(admin.ModelAdmin):
+    model = Payment
+    list_display = ("student", "date", "amount", "kind", "comment")
+    list_filter = (LatestMonthsFilter, "student",)
+
+
+admin.site.register(Payment, PaymentAdmin)

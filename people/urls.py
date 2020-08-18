@@ -94,6 +94,8 @@ urlpatterns = [
     url(r'^level_report/$', views.level_report),
     url(r'^student_report/$', views.student_report),
     url(r'^mentor_report/$', views.mentor_report),
+    url(r'^payments_csv/(?P<year>\w+)/$', views.payments_csv),
+    url(r'^payments_avg/(?P<year>\w+)/$', views.payments_avg),
     url(r'^', include(router.urls)),
     url(r'^api-auth/', include('rest_framework.urls', namespace='rest_framework'))
 ]
