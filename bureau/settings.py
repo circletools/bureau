@@ -33,7 +33,7 @@ SECRET_KEY = 'wxemd+!lwyv6f!$8ps!c+@dby@v_83&9bhzxsqhjn6c*k%7tw@'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ["localhost","bureau"]
+ALLOWED_HOSTS = ["localhost","bureau","d.labenz"]
 
 
 # See: https://docs.djangoproject.com/en/dev/ref/settings/#language-code

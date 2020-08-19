@@ -8,21 +8,32 @@
         <link rel="stylesheet" href="{% static 'admin/css/base.css' %}" /> 
 
         <style type="text/css" >
-            @page 
-            {
-                size: auto;
-                margin: 0mm;
+            @media print {
+              header,footer { 
+                display: none; 
+              }
             }
 
-            body {
-                margin-top: 10em;
-                margin-left: 10em;
+           
+
+            @page {
+              size: auto;
+              margin: 0;
+            }
+
+            #content {
+                width: 21cm;
+                margin-top: 5cm;
+                margin-left: 3cm;
+                margin-right: 3cm;
+                margin-bottom: 1cm;
             }
 
             #logo {
                 position: absolute;
-                top: 5em;
-                right: 10em;
+                top: 2cm;
+                right: 3cm;
+                width: 6cm;
             }
 
             h1 {
@@ -51,9 +62,10 @@
 
     </head>
     <body>
+        <div id="content">
         <img id="logo" src="{{ SCHOOL_LOGO }}" width="300px" alt="{{ SCHOOL_NAME }}" />
 
-        <h1>Schülerakte <br/>
+        <h1>Schüleriakte <br/>
             <b>{{ student.short_or_first_name }} {{ student.name }}</b>
         </h1>
 
@@ -177,7 +189,16 @@
                     {{ student.last_day|default:"" }}
                 </td>
             </tr>
+            <tr>
+                <td class="label">
+                    {% trans "Degree" %}
+                </td>
+                <td>
+                    {{ student.degree|default:"" }}
+                </td>
+            </tr>
         </table>
+        </div>
 
         <script>
             window.onload = function() { window.print(); }

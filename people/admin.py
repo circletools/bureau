@@ -188,7 +188,7 @@ class StudentAdmin(admin.ModelAdmin):
         return fieldsets;
 
     def cover_sheet_link(self, obj):
-        return format_html('<a class="button" href="/people/studentcoversheet/%s">%s</a>' % (obj.id, _("Print")));
+        return format_html('<a class="button" target="_blank" href="/people/studentcoversheet/%s">%s</a>' % (obj.id, _("Print")));
     cover_sheet_link.short_description = _("Cover Sheet")
     cover_sheet_link.allow_tags = True
 
