@@ -65,7 +65,7 @@
         <div id="content">
         <img id="logo" src="{{ SCHOOL_LOGO }}" width="300px" alt="{{ SCHOOL_NAME }}" />
 
-        <h1>Schüleriakte <br/>
+        <h1>Schüler*i-Akte <br/>
             <b>{{ student.short_or_first_name }} {{ student.name }}</b>
         </h1>
 
@@ -172,6 +172,14 @@
                 </td>
             </tr>
 
+            <tr>
+                <td class="label">
+                    {% trans "Mentor" %}
+                </td>
+                <td>
+                    {{ student.mentor }}
+                </td>
+            </tr>
 
             <tr>
                 <td class="label">

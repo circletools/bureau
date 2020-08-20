@@ -76,7 +76,7 @@
             {% for student in students %}
                 <tr>
                     <td class="student">
-                        {{ student.name }}, {% firstof student.short_name student.first_name %}
+                        <b>{% firstof student.short_name student.first_name %}</b> {{ student.name }}
                     </td>
                     <td class="space">
                     </td>

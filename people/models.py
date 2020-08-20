@@ -136,6 +136,7 @@ class Student(models.Model):
     privacy_policy_agreement = models.NullBooleanField(_("Privacy Policy Agreement"))
     vaccination_policy_agreement = models.NullBooleanField(_("Vaccination Policy Agreement"))
     is_sibling = models.NullBooleanField(_("Sibling"))
+    emergency_notes = models.CharField(_("Emergency Notes"), max_length=400, blank=True, null=True)
 
 # Bewerbungsverfahren:
     planned_enrollment_year = models.CharField(_("Enrollment Year"), max_length=32, blank=True, null=True)

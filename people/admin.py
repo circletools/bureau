@@ -173,7 +173,8 @@ class StudentAdmin(admin.ModelAdmin):
                     "gender", "language",
                     "citizenship", "denomination",
                     "after_school_care", "district_school",
-                    "privacy_policy_agreement", "vaccination_policy_agreement"
+                    "privacy_policy_agreement", "vaccination_policy_agreement",
+                    "emergency_notes"
                 )}),
                 (_("Edit Guardians"), {
                     "classes":("collapse",),

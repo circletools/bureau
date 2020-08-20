@@ -27,7 +27,12 @@ def studentcoversheet(request, student_id):
 @login_required
 def presence_form(request):
     return render(request, 'presence_form.html', 
-        {'students': Student.objects.filter(status="active") })
+        {'students': Student.objects.filter(status="active").order_by('first_name') })
+
+@login_required
+def emergency_notes(request):
+    return render(request, 'emergency_notes.html', 
+        {'students': Student.objects.filter(status="active").order_by('first_name') })
 
 @login_required
 def list_excel(request):
