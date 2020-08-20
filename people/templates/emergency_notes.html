@@ -1,0 +1,87 @@
+{# people/templates/students.html #}
+{% load staticfiles %}
+{% load i18n %}
+<!doctype html>
+<html>
+    <head>
+        <title>Notfallhinweise</title>
+        <link rel="stylesheet" href="{% static 'admin/css/base.css' %}" /> 
+
+        <style type="text/css" >
+            @page 
+            {
+                size: auto;
+            }
+            
+            body
+            {
+              margin: 15mm;
+            }
+
+            h1 {
+                font-size: 20pt;
+                margin-bottom: 2em;
+            }
+
+            table {
+                width: 100%;
+                margin-bottom: 2em;
+            }
+
+            thead th {
+                border-bottom: .2pt solid black;
+            }
+
+            td, th {
+                padding-left: 0;
+                padding: 0.7em;
+                font-size: 11pt;
+                border: .2pt solid black;
+                line-height: 120%;
+            }
+
+            td.label {
+                font-size: 9pt;
+            }
+
+            td.space {
+                border: .2pt solid black;
+                width: 4em;
+            }
+        </style>
+
+    </head>
+    <body>
+        <h1>Notfallhinweise (Stand {% now "Y-m-d" %})
+        </h1>
+        <table>
+            <thead>
+                <tr>
+                    <th class="student">
+                        Schüler*i
+                    </th>
+                    <th class="">
+                    </th>
+                </tr>
+            </thead>
+            <tbody>
+
+            {% for student in students %}
+                <tr>
+                    <td class="student">
+                        <b>{% firstof student.short_name student.first_name %}</b> {{ student.name }}
+                    </td>
+                    <td>
+                        {{ student.emergency_notes|default_if_none:"" }}
+                    </td>
+                </tr>
+            {% endfor %}
+            </tbody>     
+        </table>
+
+        <script>
+       //     window.onload = function() { window.print(); }
+        </script>
+
+    </body>
+</html>
