@@ -102,7 +102,7 @@
                     {% trans "Date of Birth" %}
                 </td>
                 <td>
-                    {{ student.dob }}
+                    {{ student.dob|default:"" }}
                 </td>
             </tr>
             <tr>
@@ -110,7 +110,7 @@
                     {% trans "Place of Birth" %}
                 </td>
                 <td>
-                    {{ student.pob }}
+                    {{ student.pob|default:"" }}
                 </td>
             </tr>
 
@@ -120,7 +120,7 @@
                     {% trans "Gender" %}
                 </td>
                 <td>
-                    {{ student.gender_verbose }}
+                    {{ student.gender_verbose|default:"" }}
                 </td>
             </tr>
 
@@ -129,7 +129,7 @@
                     {% trans "Citizenship" %}
                 </td>
                 <td>
-                    {{ student.citizenship }}
+                    {{ student.citizenship|default:"" }}
                 </td>
             </tr>
 
@@ -138,7 +138,7 @@
                     {% trans "Religious Denomination" %}
                 </td>
                 <td>
-                    {{ student.denomination }}
+                    {{ student.denomination|default:"" }}
                 </td>
             </tr>
 
@@ -177,7 +177,7 @@
                     {% trans "Mentor" %}
                 </td>
                 <td>
-                    {{ student.mentor }}
+                    {{ student.mentor|default:"" }}
                 </td>
             </tr>
 
@@ -186,7 +186,7 @@
                     {% trans "First day at this School" %}
                 </td>
                 <td>
-                    {{ student.first_day }}
+                    {{ student.first_day|default:"" }}
                 </td>
             </tr>
             <tr>
