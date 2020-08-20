@@ -46,7 +46,7 @@
 
             td.space {
                 border: .2pt solid black;
-                width: 4em;
+                width:8em;
             }
         </style>
 
@@ -61,13 +61,10 @@
                         Schüler*i
                     </th>
                     <th class="space">
-                        anwesend
+                        angemeldet
                     </th>
                     <th class="space">
-                        entschuldigt/krank
-                    </th>
-                    <th class="space">
-                        unentschuldigt abwesend
+                        abgemeldet
                     </th>
                 </tr>
             </thead>
@@ -77,8 +74,6 @@
                 <tr>
                     <td class="student">
                         <b>{% firstof student.short_name student.first_name %}</b> {{ student.name }}
-                    </td>
-                    <td class="space">
                     </td>
                     <td class="space">
                     </td>
