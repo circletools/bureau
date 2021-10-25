@@ -32,7 +32,9 @@ simple school management database
 		    from django.conf import settings
 		    return settings.GLOBAL_SETTINGS
 		```
-	- add 'people' to LOCAL_APPS, remove 'imprint'; remove 'django.contrib.sites' from DJANGO_APPS
+	- add 'people' to LOCAL_APPS, 
+		(DONT) remove 'imprint'; 
+		(DONT) remove 'django.contrib.sites' from DJANGO_APPS
 	- remove all LANGUAGES except de, set LANGUAGE_CODE to 'de'
 	- add 'config.settings.common.settings' to TEMPLATES[OPTIONS][context_processors]
 	- add sensible GLOBAL_SETTINGS
@@ -56,8 +58,8 @@ simple school management database
 
 - makemessages, compilemessages
 	- ```$ cd people```
-	- ```$ django-admin.py makemessages```
-	- ```$ django-admin.py compilemessages```
+	- ```$ django-admin makemessages --all```
+	- ```$ django-admin compilemessages```
 
 - migrate
 	- ```$ python manage.py makemigrations people```
@@ -69,4 +71,21 @@ simple school management database
 ### SSL error on djangoeurope.com
 
 if you get a 500 Bad Request / "Contradictory scheme headers" error after enabling an SSL certificate on djangoeurope, please observe https://panel.djangoeurope.com/support/doc/http2https
+
+
+### 2021-10-25, for infinita on djangoeurope,
+
+- add admin email in djangoeurope panel and enter itno settings
+- manually? install requirements:
+	pip3 install xlsxwriter
+	pip3 install djangorestframework
+
+- settings: 
+   DEFAULT_AUTO_FIELD='django.db.models.AutoField'
+
+
+###
+ change password:
+
+ # manage.py changepassword admin
 

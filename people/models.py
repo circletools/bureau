@@ -133,9 +133,9 @@ class Student(models.Model):
     district_school = models.CharField(_("District School"), max_length=200, blank=True, null=True)
 
     after_school_care = models.BooleanField(_("in After-school Care"), default=False)
-    privacy_policy_agreement = models.NullBooleanField(_("Privacy Policy Agreement"))
-    vaccination_policy_agreement = models.NullBooleanField(_("Vaccination Policy Agreement"))
-    is_sibling = models.NullBooleanField(_("Sibling"))
+    privacy_policy_agreement = models.BooleanField(_("Privacy Policy Agreement"), null=True)
+    vaccination_policy_agreement = models.BooleanField(_("Vaccination Policy Agreement"), null=True)
+    is_sibling = models.BooleanField(_("Sibling"), null=True)
     emergency_notes = models.CharField(_("Emergency Notes"), max_length=400, blank=True, null=True)
 
 # Bewerbungsverfahren:
@@ -143,8 +143,8 @@ class Student(models.Model):
     planned_enrollment_age = models.CharField(_("Enrollment Age"), max_length=32, blank=True, null=True)
     waitlist_position = models.IntegerField(_("Waitlist Position"), blank=True, null=True)
 
-    application_received = models.NullBooleanField(_("Application received"))
-    obligatory_conference = models.NullBooleanField(_("was present at obligatory parent conference"))
+    application_received = models.BooleanField(_("Application received"), null=True)
+    obligatory_conference = models.BooleanField(_("was present at obligatory parent conference"), null=True)
     parent_dialog = models.CharField(_("Parent Dialog"), max_length=32, blank=True, null=True)
     confirmation_status = models.CharField(_("Confirmation"), max_length=32, blank=True, null=True)
     sitting = models.CharField(_("Sitting In"), max_length=32, blank=True, null=True)
