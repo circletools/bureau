@@ -73,6 +73,8 @@ simple school management database
 if you get a 500 Bad Request / "Contradictory scheme headers" error after enabling an SSL certificate on djangoeurope, please observe https://panel.djangoeurope.com/support/doc/http2https
 
 
+## Random notes
+
 ### 2021-10-25, for infinita on djangoeurope,
 
 - add admin email in djangoeurope panel and enter itno settings
@@ -89,21 +91,26 @@ setup a dropbox app with file write permissions,
 https://www.xmodulo.com/access-dropbox-command-line-linux.html
 
 db_backup.sh:
-	#!/bin/bash
-	BACKUPFILE=~/infinita-db-data-$(date -Isecond).json
-	cd ~/bureau
-	source ./.envrc
-	python manage.py dumpdata > $BACKUPFILE
-	cd ~
-	./dropbox_uploader.sh upload $BACKUPFILE /
-	rm $BACKUPFILE
+'''
+#!/bin/bash
+BACKUPFILE=~/infinita-db-data-$(date -Isecond).json
+cd ~/bureau
+source ./.envrc
+python manage.py dumpdata > $BACKUPFILE
+cd ~
+./dropbox_uploader.sh upload $BACKUPFILE /
+rm $BACKUPFILE
+'''
 
 crontab -e
-	0 5 * * * bash /home/infinita/db_backup.sh
+'''
+0 5 * * * bash /home/infinita/db_backup.sh
+'''
 
 
-###
- change password:
+### to change password:
 
- # manage.py changepassword admin
+'''
+manage.py changepassword admin
+'''
 
