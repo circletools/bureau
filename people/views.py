@@ -128,10 +128,12 @@ def students_csv(request, status="active"):
 
 		guardian_names.reverse()
 
-
-		writer.writerow([student.name, student.first_name, student.dob.strftime("%d.%m.%Y"), calc_level(student,date.today()),
-			student.address.street, student.address.postal_code+" "+student.address.city,
-			" und ".join(guardian_names)])
+		row = [student.name, student.first_name, student.dob.strftime("%d.%m.%Y"), calc_level(student,date.today())];
+		addr = ["",""];
+		if student.address:
+			addr = [student.address.street, student.address.postal_code+" "+student.address.city];
+		row = row + addr + [" und ".join(guardian_names)];
+		writer.writerow(row);
 
 	return response;
 
@@ -503,8 +505,9 @@ def student_report_row(sheet, student, row):
 	sheet.write(row, 1, student.first_name)
 	sheet.write(row, 2, student.dob)
 	sheet.write(row, 3, student.pob)
-	sheet.write(row, 4, student.address.street)
-	sheet.write(row, 5, student.address.postal_code+" "+student.address.city)
+	if student.address:
+		sheet.write(row, 4, student.address.street)
+		sheet.write(row, 5, student.address.postal_code+" "+student.address.city)
 	sheet.write(row, 6, " und ".join(guardian_names))
 	sheet.write(row, 7, other_address)
 	sheet.write(row, 8, "%r" % student.tmp_level)
