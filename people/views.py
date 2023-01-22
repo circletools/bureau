@@ -526,9 +526,9 @@ def mentor_report_csv(request):
 		mentees = contact.mentees.filter(status="active")
 
 		if mentees.count() > 0:
-			writer.writerow([contact.name,contact.first_name]];
+			writer.writerow([contact.name,contact.first_name]);
 
 			for mentee in mentees.all():
-				writer.writerow([mentee.name,mentee.first_name]];
+				writer.writerow([mentee.name,mentee.first_name]);
 
 	return response;
