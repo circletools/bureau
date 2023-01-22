@@ -94,7 +94,7 @@ urlpatterns = [
     url(r'^society_csv/$', views.society_csv),
     url(r'^level_report/$', views.level_report),
     url(r'^student_report/$', views.student_report),
-    url(r'^mentor_report/$', views.mentor_report),
+    url(r'^mentor_report/$', views.mentor_report_csv),
     url(r'^payments_csv/(?P<year>\w+)/$', views.payments_csv),
     url(r'^payments_avg/(?P<year>\w+)/$', views.payments_avg),
     url(r'^', include(router.urls)),
