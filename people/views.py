@@ -516,23 +516,19 @@ def student_report_row(sheet, student, row):
 	sheet.write(row, 11, student.degree)
 
 @login_required
-def mentor_report(request):
-	response = HttpResponse(content_type="text/plain; charset=utf-8")
+def mentor_report_csv(request):
+	response = HttpResponse(content_type="text/csv")
+	response["Content-Disposition"] = "attachment;filename=mentori.csv"
 
-	today = date.today().strftime("%Y-%m-%d")
-	response.write( "Mentor*i-Liste Stand "+today+"\n");
-
-	# iterate team
+	writer = csv.writer(response)
+	
 	for contact in Contact.objects.all().filter(is_teammember=True):
-
 		mentees = contact.mentees.filter(status="active")
 
 		if mentees.count() > 0:
-			response.write( "\n\n"+contact.name+", "+contact.first_name+"\n\n");
+			writer.writerow([contact.name,contact.first_name]];
 
 			for mentee in mentees.all():
-				response.write( "\t"+mentee.name+", "+mentee.first_name+"\n");
-
-
+				writer.writerow([mentee.name,mentee.first_name]];
 
 	return response;
