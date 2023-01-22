@@ -40,7 +40,7 @@ class Contact(models.Model):
     first_name = models.CharField(_("First Name"), max_length=200, blank=True)
     kind = models.CharField(_("Kind"), max_length=3, choices=KIND_CHOICES)
 
-    address = models.ForeignKey(Address, verbose_name=_("Postal Address"), null=True, on_delete=models.CASCADE)
+    address = models.ForeignKey(Address, verbose_name=_("Postal Address"), blank=True, null=True, on_delete=models.CASCADE)
     phone_number = models.CharField(_("Phone"), max_length=64, blank=True)
     cellphone_number = models.CharField(_("Mobile"), max_length=64, blank=True)
     email_address = models.CharField(_("EMail"), max_length=128, blank=True)
