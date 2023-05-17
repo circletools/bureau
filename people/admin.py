@@ -16,6 +16,8 @@ from django.shortcuts import render
 from django.http import HttpResponseRedirect
 from django.contrib import messages
 
+from django.db.models import Count
+
 import calendar
 
 # set a default filter option [https://stackoverflow.com/questions/851636/default-filter-in-django-admin]
@@ -302,7 +304,7 @@ admin.site.register(Student, StudentAdmin)
 
 class ContactAdmin(admin.ModelAdmin):
     model = Contact
-    list_display = ("name","first_name","kind","phone_number","cellphone_number","email_address")
+    list_display = ("name","first_name","kind","phone_number","cellphone_number","email_address", "student_links")
     search_fields = ["name", "first_name"]
     list_filter = ("kind","is_teammember")
     readonly_fields = ("student_links","mentee_links")
@@ -338,6 +340,23 @@ class ContactAdmin(admin.ModelAdmin):
 
 admin.site.register(Contact, ContactAdmin)
 
+class AddressInUseFilter(admin.SimpleListFilter):
+    title = _("In Use")
+    parameter_name = "in_use"
+
+    def lookups(self, request, model_admin):
+        return [
+            ("yes", _("Yes")),
+            ("no", _("No")),
+        ]
+
+    def queryset(self, request, queryset):
+        value = self.value()
+        if value == "no":
+            return queryset.annotate(num_contacts=Count("contacts"), num_students=Count("students")).filter(num_contacts=0, num_students=0)
+        elif value == "yes":
+            return queryset.exclude(contacts=None, students=None)
+
 
 class AddressAdmin(admin.ModelAdmin):
     model = Address
@@ -345,11 +364,12 @@ class AddressAdmin(admin.ModelAdmin):
 #    	ContactInline,
 #    	StudentAddressInline
 #    ]
-    list_display = ("street", "city")
+    list_display = ("street", "city", "student_links", "contact_links")
     readonly_fields = ("student_links","contact_links")
+    list_filter = (AddressInUseFilter,)
 
     def student_links(self, obj):
-        students = obj.student_set.all()
+        students = obj.students.all()
         links = [];
         for student in students:
             change_url = urls.reverse("admin:people_student_change", args=(student.id,))
@@ -358,7 +378,7 @@ class AddressAdmin(admin.ModelAdmin):
     student_links.short_description = _("Students at this Address")
 
     def contact_links(self, obj):
-        contacts = obj.contact_set.all()
+        contacts = obj.contacts.all()
         links = [];
         for contact in contacts:
             change_url = urls.reverse("admin:people_contact_change", args=(contact.id,))

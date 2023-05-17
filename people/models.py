@@ -42,7 +42,7 @@ class Contact(models.Model):
     first_name = models.CharField(_("First Name"), max_length=200, blank=True)
     kind = models.CharField(_("Kind"), max_length=3, choices=KIND_CHOICES)
 
-    address = models.ForeignKey(Address, verbose_name=_("Postal Address"), blank=True, null=True, on_delete=models.CASCADE)
+    address = models.ForeignKey(Address, verbose_name=_("Postal Address"), blank=True, null=True, on_delete=models.CASCADE, related_name="contacts")
     phone_number = models.CharField(_("Phone"), max_length=64, blank=True)
     cellphone_number = models.CharField(_("Mobile"), max_length=64, blank=True)
     email_address = models.CharField(_("EMail"), max_length=128, blank=True)
@@ -127,7 +127,7 @@ class Student(models.Model):
     level_ofs = models.IntegerField(_("Class Level (at Reference)"), blank=True, null=True)
     level_ref = models.IntegerField(_("Class Level Reference"), blank=True, null=True)
 
-    address = models.ForeignKey(Address, verbose_name=_("Postal Address"), null=True, blank=True, on_delete=models.SET_NULL)
+    address = models.ForeignKey(Address, verbose_name=_("Postal Address"), null=True, blank=True, on_delete=models.CASCADE, related_name="students")
     guardians = models.ManyToManyField(Contact, verbose_name=_("Guardians"), limit_choices_to={"kind":"prs"}, blank=True, related_name="students")
 
     mentor = models.ForeignKey(Contact, verbose_name=_("Mentor"), null=True, blank=True, limit_choices_to={"kind":"prs","is_teammember":True}, on_delete=models.CASCADE, related_name="mentees")
@@ -154,24 +154,6 @@ class Student(models.Model):
     def __str__(self):
         return self.name + ", " + self.first_name
 
-@receiver(pre_delete, sender=Student)
-def pre_delete_student(sender, instance, **kwargs):
-    for guardian in instance.guardians.all():
-        if guardian.students.count() == 1:
-            # instance is the only Student associated with this Guardian, so delete it
-            guardian.delete()
-
-    address = instance.address
-    if address and not address.student_set.exclude(pk=instance.pk).exists() and not address.contact_set.exists():
-        address.delete()
-
-@receiver(pre_delete, sender=Contact)
-def pre_delete_contact(sender, instance, **kwargs):
-    address = instance.address
-    if address and not address.student_set.exists() and not address.contact_set.exclude(pk=instance.pk).exists():
-        address.delete()
-        
-                   
 class Note(models.Model):
     class Meta:
         verbose_name = _("Note")
