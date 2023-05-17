@@ -2,14 +2,14 @@ from django.contrib import admin
 from django import urls
 from django.utils.html import format_html
 from django.http import HttpResponse
-from django.utils.translation import ugettext as _
+from django.utils.translation import gettext as _
 
 from .models import *
 from django import forms
 
 from datetime import date
 
-from django.utils.encoding import force_text
+from django.utils.encoding import force_str
 from django.db.models import F, ExpressionWrapper, IntegerField
 
 from django.shortcuts import render
@@ -42,7 +42,7 @@ class DefaultListFilter(admin.SimpleListFilter):
         }
         for lookup, title in self.lookup_choices:
             yield {
-                'selected': self.value() == force_text(lookup) or (self.value() == None and force_text(self.default_value()) == force_text(lookup)),
+                'selected': self.value() == force_str(lookup) or (self.value() == None and force_str(self.default_value()) == force_str(lookup)),
                 'query_string': cl.get_query_string({
                     self.parameter_name: lookup,
                 }, []),
@@ -272,6 +272,29 @@ class StudentAdmin(admin.ModelAdmin):
 
 
     email_list.short_description = _("Export Guardian EMail addresses")
+
+    def delete_view(self, request, object_id, extra_context=None):
+        if extra_context is None:
+            extra_context = {}
+        
+        # Retrieve the student object
+        student = self.get_object(request, object_id)
+
+
+        # Check if the student is the only one associated with any guardian
+        delete_guardians = []
+        for guardian in student.guardians.all():
+            if guardian.students.count() == 1:
+                delete_guardians.append(guardian)
+
+        print ("checking for guardian deletion - "+str(delete_guardians))
+
+        # Add a warning message to the confirmation page
+        if delete_guardians:
+            extra_context['extra_message'] = _("Warning: Deleting this student will also delete the following guardians: ")
+            extra_context['extra_message'] += "; ".join([str(guardian) for guardian in delete_guardians])
+
+        return super().delete_view(request, object_id, extra_context=extra_context)
 
 
 admin.site.register(Student, StudentAdmin)

@@ -1,0 +1,10 @@
+{% extends "admin/delete_confirmation.html" %}
+
+{% block content %}
+{{ block.super }}
+{% if extra_message %}
+<div class="messagelink">
+  <p class="deletelink">{{ extra_message }}</p>
+</div>
+{% endif %}
+{% endblock %}

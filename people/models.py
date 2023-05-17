@@ -1,9 +1,11 @@
 from __future__ import unicode_literals
 
 from django.db import models
-from django.utils.translation import ugettext as _
+from django.utils.translation import gettext as _
 
 from django import forms
+from django.db.models.signals import pre_delete
+from django.dispatch import receiver
 
 class Address(models.Model):
     class Meta:
@@ -125,7 +127,7 @@ class Student(models.Model):
     level_ofs = models.IntegerField(_("Class Level (at Reference)"), blank=True, null=True)
     level_ref = models.IntegerField(_("Class Level Reference"), blank=True, null=True)
 
-    address = models.ForeignKey(Address, verbose_name=_("Postal Address"), null=True, blank=True, on_delete=models.CASCADE)
+    address = models.ForeignKey(Address, verbose_name=_("Postal Address"), null=True, blank=True, on_delete=models.SET_NULL)
     guardians = models.ManyToManyField(Contact, verbose_name=_("Guardians"), limit_choices_to={"kind":"prs"}, blank=True, related_name="students")
 
     mentor = models.ForeignKey(Contact, verbose_name=_("Mentor"), null=True, blank=True, limit_choices_to={"kind":"prs","is_teammember":True}, on_delete=models.CASCADE, related_name="mentees")
@@ -148,11 +150,28 @@ class Student(models.Model):
     parent_dialog = models.CharField(_("Parent Dialog"), max_length=32, blank=True, null=True)
     confirmation_status = models.CharField(_("Confirmation"), max_length=32, blank=True, null=True)
     sitting = models.CharField(_("Sitting In"), max_length=32, blank=True, null=True)
-
+     
     def __str__(self):
         return self.name + ", " + self.first_name
 
+@receiver(pre_delete, sender=Student)
+def pre_delete_student(sender, instance, **kwargs):
+    for guardian in instance.guardians.all():
+        if guardian.students.count() == 1:
+            # instance is the only Student associated with this Guardian, so delete it
+            guardian.delete()
 
+    address = instance.address
+    if address and not address.student_set.exclude(pk=instance.pk).exists() and not address.contact_set.exists():
+        address.delete()
+
+@receiver(pre_delete, sender=Contact)
+def pre_delete_contact(sender, instance, **kwargs):
+    address = instance.address
+    if address and not address.student_set.exists() and not address.contact_set.exclude(pk=instance.pk).exists():
+        address.delete()
+        
+                   
 class Note(models.Model):
     class Meta:
         verbose_name = _("Note")
