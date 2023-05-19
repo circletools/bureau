@@ -1,4 +1,4 @@
-from django.conf.urls import url, include
+from django.urls import re_path, include
 
 from . import views
 
@@ -85,18 +85,18 @@ router.register(r'contact', ContactViewSet, "contact")
 
 urlpatterns = [
 #    url(r'^$', views.index, name='index'),
-    url(r'^adressliste$', views.list_excel, name='adressliste'),
-    url(r'^presence_form$', views.presence_form, name='prasenzliste'),
-    url(r'^emergency_notes$', views.emergency_notes, name='emergency_notes'),
+    re_path(r'^adressliste$', views.list_excel, name='adressliste'),
+    re_path(r'^presence_form$', views.presence_form, name='prasenzliste'),
+    re_path(r'^emergency_notes$', views.emergency_notes, name='emergency_notes'),
 #    url(r'^students$', views.students_csv, name='students'),
-    url(r'^studentcoversheet/(?P<student_id>\w+)/$', views.studentcoversheet, name='studentcoversheet'),
-    url(r'^students_csv/(?P<status>\w+)/$', views.students_csv),
-    url(r'^society_csv/$', views.society_csv),
-    url(r'^level_report/$', views.level_report),
-    url(r'^student_report/$', views.student_report),
-    url(r'^mentor_report/$', views.mentor_report_csv),
-    url(r'^payments_csv/(?P<year>\w+)/$', views.payments_csv),
-    url(r'^payments_avg/(?P<year>\w+)/$', views.payments_avg),
-    url(r'^', include(router.urls)),
-    url(r'^api-auth/', include('rest_framework.urls', namespace='rest_framework'))
+    re_path(r'^studentcoversheet/(?P<student_id>\w+)/$', views.studentcoversheet, name='studentcoversheet'),
+    re_path(r'^students_csv/(?P<status>\w+)/$', views.students_csv),
+    re_path(r'^society_csv/$', views.society_csv),
+    re_path(r'^level_report/$', views.level_report),
+    re_path(r'^student_report/$', views.student_report),
+    re_path(r'^mentor_report/$', views.mentor_report_csv),
+    re_path(r'^payments_csv/(?P<year>\w+)/$', views.payments_csv),
+    re_path(r'^payments_avg/(?P<year>\w+)/$', views.payments_avg),
+    re_path(r'^', include(router.urls)),
+    re_path(r'^api-auth/', include('rest_framework.urls', namespace='rest_framework'))
 ]

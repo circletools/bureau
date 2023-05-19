@@ -2,19 +2,21 @@ from django.contrib import admin
 from django import urls
 from django.utils.html import format_html
 from django.http import HttpResponse
-from django.utils.translation import ugettext as _
+from django.utils.translation import gettext as _
 
 from .models import *
 from django import forms
 
 from datetime import date
 
-from django.utils.encoding import force_text
+from django.utils.encoding import force_str
 from django.db.models import F, ExpressionWrapper, IntegerField
 
 from django.shortcuts import render
 from django.http import HttpResponseRedirect
 from django.contrib import messages
+
+from django.db.models import Count
 
 import calendar
 
@@ -42,7 +44,7 @@ class DefaultListFilter(admin.SimpleListFilter):
         }
         for lookup, title in self.lookup_choices:
             yield {
-                'selected': self.value() == force_text(lookup) or (self.value() == None and force_text(self.default_value()) == force_text(lookup)),
+                'selected': self.value() == force_str(lookup) or (self.value() == None and force_str(self.default_value()) == force_str(lookup)),
                 'query_string': cl.get_query_string({
                     self.parameter_name: lookup,
                 }, []),
@@ -273,13 +275,36 @@ class StudentAdmin(admin.ModelAdmin):
 
     email_list.short_description = _("Export Guardian EMail addresses")
 
+    def delete_view(self, request, object_id, extra_context=None):
+        if extra_context is None:
+            extra_context = {}
+        
+        # Retrieve the student object
+        student = self.get_object(request, object_id)
+
+
+        # Check if the student is the only one associated with any guardian
+        delete_guardians = []
+        for guardian in student.guardians.all():
+            if guardian.students.count() == 1:
+                delete_guardians.append(guardian)
+
+        print ("checking for guardian deletion - "+str(delete_guardians))
+
+        # Add a warning message to the confirmation page
+        if delete_guardians:
+            extra_context['extra_message'] = _("Warning: Deleting this student will also delete the following guardians: ")
+            extra_context['extra_message'] += "; ".join([str(guardian) for guardian in delete_guardians])
+
+        return super().delete_view(request, object_id, extra_context=extra_context)
+
 
 admin.site.register(Student, StudentAdmin)
 
 
 class ContactAdmin(admin.ModelAdmin):
     model = Contact
-    list_display = ("name","first_name","kind","phone_number","cellphone_number","email_address")
+    list_display = ("name","first_name","kind","phone_number","cellphone_number","email_address", "student_links")
     search_fields = ["name", "first_name"]
     list_filter = ("kind","is_teammember")
     readonly_fields = ("student_links","mentee_links")
@@ -315,6 +340,23 @@ class ContactAdmin(admin.ModelAdmin):
 
 admin.site.register(Contact, ContactAdmin)
 
+class AddressInUseFilter(admin.SimpleListFilter):
+    title = _("In Use")
+    parameter_name = "in_use"
+
+    def lookups(self, request, model_admin):
+        return [
+            ("yes", _("Yes")),
+            ("no", _("No")),
+        ]
+
+    def queryset(self, request, queryset):
+        value = self.value()
+        if value == "no":
+            return queryset.annotate(num_contacts=Count("contacts"), num_students=Count("students")).filter(num_contacts=0, num_students=0)
+        elif value == "yes":
+            return queryset.exclude(contacts=None, students=None)
+
 
 class AddressAdmin(admin.ModelAdmin):
     model = Address
@@ -322,11 +364,12 @@ class AddressAdmin(admin.ModelAdmin):
 #    	ContactInline,
 #    	StudentAddressInline
 #    ]
-    list_display = ("street", "city")
+    list_display = ("street", "city", "student_links", "contact_links")
     readonly_fields = ("student_links","contact_links")
+    list_filter = (AddressInUseFilter,)
 
     def student_links(self, obj):
-        students = obj.student_set.all()
+        students = obj.students.all()
         links = [];
         for student in students:
             change_url = urls.reverse("admin:people_student_change", args=(student.id,))
@@ -335,7 +378,7 @@ class AddressAdmin(admin.ModelAdmin):
     student_links.short_description = _("Students at this Address")
 
     def contact_links(self, obj):
-        contacts = obj.contact_set.all()
+        contacts = obj.contacts.all()
         links = [];
         for contact in contacts:
             change_url = urls.reverse("admin:people_contact_change", args=(contact.id,))
