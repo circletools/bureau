@@ -137,6 +137,7 @@ class Student(models.Model):
     after_school_care = models.BooleanField(_("in After-school Care"), default=False)
     privacy_policy_agreement = models.BooleanField(_("Privacy Policy Agreement"), null=True)
     vaccination_policy_agreement = models.BooleanField(_("Vaccination Policy Agreement"), null=True)
+    vaccination_measles = models.BooleanField(_("Measle Vaccination"), null=True)
     is_sibling = models.BooleanField(_("Sibling"), null=True)
     emergency_notes = models.CharField(_("Emergency Notes"), max_length=400, blank=True, null=True)
 

@@ -177,6 +177,8 @@ CORS_ORIGIN_REGEX_WHITELIST = (
     'http://localhost:3030',
 )
 
+DEFAULT_AUTO_FIELD='django.db.models.AutoField'
+
 GLOBAL_SETTINGS = {
     'LEVEL_REPORT_FIRST_YEAR': 2013,
     'LEVEL_REPORT_YEARS': 25,
