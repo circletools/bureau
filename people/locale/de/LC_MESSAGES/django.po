@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2023-05-17 13:30+0000\n"
+"POT-Creation-Date: 2023-09-16 11:28+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -18,104 +18,116 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 
-#: people/admin.py:41
+#: people/admin.py:43
 msgid "All"
 msgstr "Alle"
 
-#: people/admin.py:53 people/models.py:98
+#: people/admin.py:55 people/models.py:98
 msgid "Status"
 msgstr "Status"
 
-#: people/admin.py:63 people/models.py:144
+#: people/admin.py:65 people/models.py:145
 msgid "Enrollment Year"
 msgstr "Einschulungsjahr"
 
-#: people/admin.py:145
+#: people/admin.py:147
 msgid "Application"
 msgstr "Bewerbungsverfahren"
 
-#: people/admin.py:153
+#: people/admin.py:155
 msgid "Waitlist"
 msgstr "Warteliste"
 
-#: people/admin.py:160 people/admin.py:227
+#: people/admin.py:162 people/admin.py:229
 msgid "Class Level"
 msgstr "Klassenstufe"
 
-#: people/admin.py:169
+#: people/admin.py:171
 msgid "Formalities"
 msgstr "Formalitäten"
 
-#: people/admin.py:179
+#: people/admin.py:181
 msgid "Edit Guardians"
 msgstr "Erziehungsberechtigte bearbeiten"
 
-#: people/admin.py:192
+#: people/admin.py:194
 msgid "Print"
 msgstr "Drucken"
 
-#: people/admin.py:193
+#: people/admin.py:195
 msgid "Cover Sheet"
 msgstr "Datenblatt"
 
-#: people/admin.py:204 people/models.py:131
+#: people/admin.py:206 people/models.py:131
 #: people/templates/studentcoversheet.html:160
 msgid "Guardians"
 msgstr "Erziehungsberechtigte"
 
-#: people/admin.py:207
+#: people/admin.py:209
 msgid "List"
 msgstr ""
 
-#: people/admin.py:208 people/models.py:184
+#: people/admin.py:210 people/models.py:178
 msgid "Payments"
 msgstr "Zahlungen"
 
-#: people/admin.py:213 people/models.py:41
+#: people/admin.py:215 people/models.py:41
 msgid "Name"
 msgstr "Name"
 
-#: people/admin.py:217 people/models.py:112
+#: people/admin.py:219 people/models.py:112
 #: people/templates/studentcoversheet.html:120
 msgid "Gender"
 msgstr "Geschlecht"
 
-#: people/admin.py:247
+#: people/admin.py:249
 #, python-format
 msgid "Changed status (to '%(status)s') on %(count)s students"
 msgstr "Status bei %(count)s Schüler*i auf '%(status)s' geändert "
 
-#: people/admin.py:254 people/templates/admin/change_status.html:11
+#: people/admin.py:256 people/templates/admin/change_status.html:11
 #: people/templates/admin/change_status.html:33
 msgid "Change Status"
 msgstr "Status ändern"
 
-#: people/admin.py:274
+#: people/admin.py:276
 msgid "Export Guardian EMail addresses"
 msgstr "EMail-Liste der Erziehungsberechtigten anzeigen"
 
-#: people/admin.py:294
+#: people/admin.py:296
 msgid ""
 "Warning: Deleting this student will also delete the following guardians: "
 msgstr "Achtung: Es werden auch folgende Erziehungsberechtigte gelöscht: "
 
-#: people/admin.py:326 people/models.py:72
+#: people/admin.py:328 people/models.py:72
 msgid "Students"
 msgstr "Schüler*i"
 
-#: people/admin.py:337
+#: people/admin.py:339
 msgid "Mentees"
 msgstr ""
 
-#: people/admin.py:358
+#: people/admin.py:344
+msgid "In Use"
+msgstr ""
+
+#: people/admin.py:349
+msgid "Yes"
+msgstr "Ja"
+
+#: people/admin.py:350
+msgid "No"
+msgstr "Nein"
+
+#: people/admin.py:378
 msgid "Students at this Address"
 msgstr "Schüler*i an dieser Adresse"
 
-#: people/admin.py:367
+#: people/admin.py:387
 msgid "Contacts at this Address"
 msgstr "Kontakte an dieser Adresse"
 
-#: people/admin.py:377
+#: people/admin.py:397
 #, fuzzy
 #| msgid "%d month"
 #| msgid_plural "%d months"
@@ -159,7 +171,7 @@ msgstr "Kontakt"
 msgid "Contacts"
 msgstr "Kontakte"
 
-#: people/models.py:35 people/models.py:179
+#: people/models.py:35 people/models.py:173
 msgid "Other"
 msgstr "Andere"
 
@@ -180,7 +192,7 @@ msgstr "Organisation/Amt/etc"
 msgid "First Name"
 msgstr "Vorname"
 
-#: people/models.py:43 people/models.py:190
+#: people/models.py:43 people/models.py:184
 msgid "Kind"
 msgstr "Art"
 
@@ -212,11 +224,11 @@ msgstr "Trägervereinsmitglied"
 msgid "Team-EMail"
 msgstr "Team-EMail"
 
-#: people/models.py:56 people/models.py:166
+#: people/models.py:56 people/models.py:160
 msgid "Note"
 msgstr "Notiz"
 
-#: people/models.py:71 people/models.py:172 people/models.py:186
+#: people/models.py:71 people/models.py:166 people/models.py:180
 #: people/templates/admin/change_status.html:43
 msgid "Student"
 msgstr "Schüler*i"
@@ -342,78 +354,82 @@ msgid "Vaccination Policy Agreement"
 msgstr "Infektionsschutzgesetz"
 
 #: people/models.py:140
+msgid "Measle Vaccination"
+msgstr "Masernschutz besteht"
+
+#: people/models.py:141
 msgid "Sibling"
 msgstr "Geschwisterkind"
 
-#: people/models.py:141
+#: people/models.py:142
 msgid "Emergency Notes"
 msgstr "Notfallhinweise"
 
-#: people/models.py:145
+#: people/models.py:146
 msgid "Enrollment Age"
 msgstr "Einschulungsalter"
 
-#: people/models.py:146
+#: people/models.py:147
 msgid "Waitlist Position"
 msgstr "Position Warteliste"
 
-#: people/models.py:148
+#: people/models.py:149
 msgid "Application received"
 msgstr "Bewerbung erhalten"
 
-#: people/models.py:149
+#: people/models.py:150
 msgid "was present at obligatory parent conference"
 msgstr "Obl. EA"
 
-#: people/models.py:150
+#: people/models.py:151
 msgid "Parent Dialog"
 msgstr "Elterngespräch"
 
-#: people/models.py:151
+#: people/models.py:152
 msgid "Confirmation"
 msgstr "(vorl.) Zusage"
 
-#: people/models.py:152
+#: people/models.py:153
 msgid "Sitting In"
 msgstr "Hospitation"
 
-#: people/models.py:167
+#: people/models.py:161
 msgid "Notes"
 msgstr "Notizen"
 
-#: people/models.py:169
+#: people/models.py:163
 msgid "Content"
 msgstr "Inhalt"
 
-#: people/models.py:170 people/models.py:188
+#: people/models.py:164 people/models.py:182
 msgid "Date"
 msgstr "Datum"
 
-#: people/models.py:171
+#: people/models.py:165
 msgid "Archived"
 msgstr "Archiviert"
 
-#: people/models.py:176
+#: people/models.py:170
 msgid "Tuition"
 msgstr "Schulgeld"
 
-#: people/models.py:177
+#: people/models.py:171
 msgid "for Materials"
 msgstr "Materialgeld"
 
-#: people/models.py:178
+#: people/models.py:172
 msgid "Afternoon Care"
 msgstr "Nachmittagsbetreuung"
 
-#: people/models.py:183
+#: people/models.py:177
 msgid "Payment"
 msgstr "Zahlung"
 
-#: people/models.py:189
+#: people/models.py:183
 msgid "Amount"
 msgstr "Betrag"
 
-#: people/models.py:191
+#: people/models.py:185
 msgid "Comment"
 msgstr "Anmerkung"
 
@@ -497,12 +513,6 @@ msgstr "Abschluss"
 
 #~ msgid "Unknown"
 #~ msgstr "Unbekannt"
-
-#~ msgid "Yes"
-#~ msgstr "Ja"
-
-#~ msgid "No"
-#~ msgstr "Nein"
 
 #~ msgid "p.m."
 #~ msgstr "pm."
