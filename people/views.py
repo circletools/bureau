@@ -137,6 +137,37 @@ def students_csv(request, status="active"):
 
 	return response;
 
+@login_required
+def students_vacc_csv(request, status="active"):
+	response = HttpResponse(content_type="text/csv")
+	response["Content-Disposition"] = "attachment;filename=list.csv"
+
+	writer = csv.writer(response)
+
+	writer.writerow(["Schüler*i mit Status '"+status+"'"]);
+	writer.writerow(["Name", "Vorname", "Geburtsdatum", "Infektionsschutzgesetz", "Masernschutz"])
+
+	for student in Student.objects.all().filter(status=status):
+		guardian_names = [];
+		first_guardian_name = ""
+		for guardian in student.guardians.all():
+			if first_guardian_name == guardian.name:
+				guardian_names.append(guardian.first_name);
+			else:
+				first_guardian_name = guardian.name;
+				guardian_names.append(guardian.first_name + " " + guardian.name);
+
+		guardian_names.reverse()
+
+		row = [student.name, student.first_name, student.dob.strftime("%d.%m.%Y")];
+		row = row + [ 
+               "Ja" if student.vaccination_policy_agreement else "Nein", 
+               "Ja" if student.vaccination_measles else "Nein" 
+               ];
+		writer.writerow(row);
+
+	return response;
+
 
 @login_required
 def payments_csv(request, year):
@@ -422,7 +453,8 @@ def student_report(request):
 	sheet.set_column(2,5,15)
 	sheet.set_column(5,7,30)
 	sheet.set_column(8,8,5)
-	sheet.set_column(9,12,15)
+	sheet.set_column(9,11,10)
+	sheet.set_column(12,14,15)
 
 	sheet.write(row, 0, "Stand")
 	sheet.write(row, 2, period_end)
@@ -443,15 +475,20 @@ def student_report(request):
 	sheet.write(row, 6, "Erziehungsberechtigte")
 	sheet.write(row, 7, "Anschrift Erziehungsberechtigte (falls abweichend)")
 	sheet.write(row, 8, "Klassenstufe")
-	sheet.write(row, 9, "Tag des Eintritts")
-	sheet.write(row, 10, "Tag der Entlassung")
-	sheet.write(row, 11, "Abschluss")
-	sheet.set_row(row, 12, format_bold)
+
+	sheet.write(row, 9, "Konfession")
+	sheet.write(row, 10, "Geschlecht")
+	sheet.write(row, 11, "Schüler*i-Nummer")
+
+	sheet.write(row, 12, "Tag des Eintritts")
+	sheet.write(row, 13, "Tag der Entlassung")
+	sheet.write(row, 14, "Abschluss")
+	sheet.set_row(row, 15, format_bold)
 	row += 1
 
 	for student in sorted(students, key=lambda student: student.tmp_level):
 		student_report_row(sheet, student, row)
-		sheet.set_row(row, 12, format_normal)
+		sheet.set_row(row, 15, format_normal)
 		row += 1
 
 	row += 1
@@ -461,17 +498,17 @@ def student_report(request):
 
 	for student in sorted(students_that_came, key=lambda student: student.tmp_level):
 		student_report_row(sheet, student, row)
-		sheet.set_row(row, 12, format_normal)
+		sheet.set_row(row, 15, format_normal)
 		row += 1
 
 	row += 1
 	sheet.write(row, 0, "Abgegangen")
-	sheet.set_row(row, 12, format_bold)
+	sheet.set_row(row, 15, format_bold)
 	row += 1
 
 	for student in sorted(students_that_left, key=lambda student: student.tmp_level):
 		student_report_row(sheet, student, row)
-		sheet.set_row(row, 12, format_normal)
+		sheet.set_row(row, 15, format_normal)
 		row += 1
 
 	book.close()
@@ -511,9 +548,12 @@ def student_report_row(sheet, student, row):
 	sheet.write(row, 6, " und ".join(guardian_names))
 	sheet.write(row, 7, other_address)
 	sheet.write(row, 8, "%r" % student.tmp_level)
-	sheet.write(row, 9, student.first_day)
-	sheet.write(row, 10, student.last_day)
-	sheet.write(row, 11, student.degree)
+	sheet.write(row, 9, student.denomination)
+	sheet.write(row, 10, student.gender)
+	sheet.write(row, 11, str(student.entry_nr))
+	sheet.write(row, 12, student.first_day)
+	sheet.write(row, 13, student.last_day)
+	sheet.write(row, 14, student.degree)
 
 @login_required
 def mentor_report_csv(request):
