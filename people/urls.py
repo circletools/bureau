@@ -91,6 +91,7 @@ urlpatterns = [
 #    url(r'^students$', views.students_csv, name='students'),
     re_path(r'^studentcoversheet/(?P<student_id>\w+)/$', views.studentcoversheet, name='studentcoversheet'),
     re_path(r'^students_csv/(?P<status>\w+)/$', views.students_csv),
+    re_path(r'^students_vacc_csv/(?P<status>\w+)/$', views.students_vacc_csv),
     re_path(r'^society_csv/$', views.society_csv),
     re_path(r'^level_report/$', views.level_report),
     re_path(r'^student_report/$', views.student_report),
