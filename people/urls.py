@@ -36,7 +36,7 @@ class StudentSerializer(serializers.HyperlinkedModelSerializer):
             'gender', 'denomination', 'citizenship', 'language',
             'first_day', 'last_day', 'first_enrollment', 'level_ofs', 'level_ref',
             'district_school', 'after_school_care', 'privacy_policy_agreement', 'vaccination_policy_agreement',
-            'is_sibling', 'planned_enrollment_year', 'planned_enrollment_age', 'application_note', 'waitlist_position',
+            'is_sibling', 'planned_enrollment_year', 'planned_enrollment_age', 'remark', 'waitlist_position',
             'application_received', 'obligatory_conference', 'parent_dialog', 'confirmation_status', 'sitting',
             'address', 
             'guardians',
@@ -78,7 +78,7 @@ class ContactViewSet(viewsets.ModelViewSet):
 
 
 router = routers.DefaultRouter()
-router.register(r'students', StudentListViewSet, "student")
+router.register(r'students', StudentListViewSet, "student-list")
 router.register(r'student', StudentViewSet, "student")
 router.register(r'address', AddressViewSet, "address")
 router.register(r'contact', ContactViewSet, "contact")
