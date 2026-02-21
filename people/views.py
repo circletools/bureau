@@ -403,11 +403,18 @@ def student_report(request):
 	if today.month <= 1:
 		period_start = date(year-1, 7, 31)
 	elif today.month < 8:
-		period_start = date(year, 1, 31) 
+		period_start = date(year, 1, 31)
 	else:
 		period_start = date(year, 7, 31)
 
 	period_end = today;
+
+	if request.GET.get("period") == "previous":
+		period_end = period_start
+		if period_end.month == 7:
+			period_start = date(period_end.year, 1, 31)
+		else:
+			period_start = date(period_end.year - 1, 7, 31)
 
 	students_that_left = []
 	students_that_came = []
