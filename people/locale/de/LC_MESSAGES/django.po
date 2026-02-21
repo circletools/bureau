@@ -3,7 +3,6 @@
 # This file is distributed under the same license as the PACKAGE package.
 # FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
 #
-#, fuzzy
 msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
@@ -94,10 +93,18 @@ msgstr "Status ändern"
 msgid "Export Guardian EMail addresses"
 msgstr "EMail-Liste der Erziehungsberechtigten anzeigen"
 
-#: people/admin.py:296
-msgid ""
-"Warning: Deleting this student will also delete the following guardians: "
-msgstr "Achtung: Es werden auch folgende Erziehungsberechtigte gelöscht: "
+#: people/admin.py
+#, python-format
+msgid "Also deleted %d orphaned guardian(s)."
+msgstr "%d verwaiste Erziehungsberechtigte gelöscht."
+
+#: people/admin.py
+msgid "Orphaned"
+msgstr "Verwaist"
+
+#: people/templates/admin/people/student/delete_confirmation.html
+msgid "These guardians have no other linked students and will also be deleted:"
+msgstr "Diese Erziehungsberechtigten haben keine weiteren verknüpften Schüler*i und werden ebenfalls gelöscht:"
 
 #: people/admin.py:328 people/models.py:72
 msgid "Students"
@@ -187,6 +194,14 @@ msgstr "Firma"
 msgid "Organization"
 msgstr "Organisation/Amt/etc"
 
+#: people/models.py:39
+msgid "Bufdi"
+msgstr "Bufdi"
+
+#: people/models.py:40
+msgid "Intern"
+msgstr "Praktikant*i"
+
 #: people/models.py:42 people/models.py:101
 #: people/templates/studentcoversheet.html:93
 msgid "First Name"
@@ -195,6 +210,10 @@ msgstr "Vorname"
 #: people/models.py:43 people/models.py:184
 msgid "Kind"
 msgstr "Art"
+
+#: people/models.py people/admin.py
+msgid "Other Kind"
+msgstr "Andere Art"
 
 #: people/models.py:46
 msgid "Phone"

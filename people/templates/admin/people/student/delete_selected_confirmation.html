@@ -1,0 +1,35 @@
+{% extends "admin/delete_selected_confirmation.html" %}
+{% load i18n l10n %}
+
+{% block content %}
+{% if not perms_lacking and not protected %}
+    <p>{% blocktranslate %}Are you sure you want to delete the selected {{ objects_name }}? All of the following objects and their related items will be deleted:{% endblocktranslate %}</p>
+    {% include "admin/includes/object_delete_summary.html" %}
+    <h2>{% translate "Objects" %}</h2>
+    {% for deletable_object in deletable_objects %}
+        <ul>{{ deletable_object|unordered_list }}</ul>
+    {% endfor %}
+    {% if delete_guardians %}
+    <h2>{% trans "Guardians" %}</h2>
+    <p>{% trans "These guardians have no other linked students and will also be deleted:" %}</p>
+    <ul>
+    {% for guardian in delete_guardians %}
+        <li>{{ guardian }}</li>
+    {% endfor %}
+    </ul>
+    {% endif %}
+    <form method="post">{% csrf_token %}
+    <div>
+    {% for obj in queryset %}
+    <input type="hidden" name="{{ action_checkbox_name }}" value="{{ obj.pk|unlocalize }}">
+    {% endfor %}
+    <input type="hidden" name="action" value="delete_selected">
+    <input type="hidden" name="post" value="yes">
+    <input type="submit" value="{% translate "Yes, I’m sure" %}">
+    <a href="#" class="button cancel-link">{% translate "No, take me back" %}</a>
+    </div>
+    </form>
+{% else %}
+    {{ block.super }}
+{% endif %}
+{% endblock %}

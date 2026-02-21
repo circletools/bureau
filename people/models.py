@@ -36,11 +36,14 @@ class Contact(models.Model):
             ("prs",_("Person")),
             ("com",_("Company")),
             ("org",_("Organization")),
+            ("buf",_("Bufdi")),
+            ("int",_("Intern")),
         )
 
     name = models.CharField(_("Name"), max_length=200)
     first_name = models.CharField(_("First Name"), max_length=200, blank=True)
     kind = models.CharField(_("Kind"), max_length=3, choices=KIND_CHOICES)
+    other_kind = models.CharField(_("Other Kind"), max_length=200, blank=True)
 
     address = models.ForeignKey(Address, verbose_name=_("Postal Address"), blank=True, null=True, on_delete=models.CASCADE, related_name="contacts")
     phone_number = models.CharField(_("Phone"), max_length=64, blank=True)
