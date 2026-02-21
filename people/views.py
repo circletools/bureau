@@ -532,8 +532,8 @@ def student_report_row(sheet, student, row):
 			first_guardian_name = guardian.name;
 			guardian_names.append(guardian.first_name + " " + guardian.name);
 
-		if guardian.address != student.address:
-			other_address = "%s %s, %s, %s %s  " % (guardian.first_name, guardian.name, 
+		if guardian.address and guardian.address != student.address:
+			other_address = "%s %s, %s, %s %s  " % (guardian.first_name, guardian.name,
 				guardian.address.street, guardian.address.postal_code, guardian.address.city)
 
 	guardian_names.reverse()
