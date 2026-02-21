@@ -17,6 +17,7 @@ from django.http import HttpResponseRedirect
 from django.contrib import messages
 
 from django.db.models import Count
+from django.contrib.admin.actions import delete_selected as default_delete_selected
 
 import calendar
 
@@ -128,7 +129,7 @@ class StudentAdmin(admin.ModelAdmin):
 
         return (StudentStatusFilter,)
 
-    actions = ["email_list","change_status"];
+    actions = ["email_list","change_status","delete_selected"];
 
     search_fields = ["entry_nr", "first_name", "name"]
     filter_horizontal = ("guardians",)
@@ -278,40 +279,93 @@ class StudentAdmin(admin.ModelAdmin):
     def delete_view(self, request, object_id, extra_context=None):
         if extra_context is None:
             extra_context = {}
-        
-        # Retrieve the student object
+
         student = self.get_object(request, object_id)
-
-
-        # Check if the student is the only one associated with any guardian
-        delete_guardians = []
-        for guardian in student.guardians.all():
-            if guardian.students.count() == 1:
-                delete_guardians.append(guardian)
-
-        print ("checking for guardian deletion - "+str(delete_guardians))
-
-        # Add a warning message to the confirmation page
-        if delete_guardians:
-            extra_context['extra_message'] = _("Warning: Deleting this student will also delete the following guardians: ")
-            extra_context['extra_message'] += "; ".join([str(guardian) for guardian in delete_guardians])
+        if student:
+            extra_context['delete_guardians'] = self._find_orphaned_guardians([student])
 
         return super().delete_view(request, object_id, extra_context=extra_context)
+
+    def _find_orphaned_guardians(self, students):
+        """Find guardians that will have no students left after deleting the given students."""
+        student_ids = set(s.id for s in students)
+        seen = set()
+        orphaned = []
+        for student in students:
+            for g in student.guardians.all():
+                if g.id in seen or g.is_teammember or g.is_societymember:
+                    continue
+                seen.add(g.id)
+                other_count = g.students.exclude(id__in=student_ids).count()
+                if other_count == 0:
+                    orphaned.append(g)
+        return orphaned
+
+    def delete_model(self, request, obj):
+        orphaned = self._find_orphaned_guardians([obj])
+        super().delete_model(request, obj)
+        for g in orphaned:
+            g.delete()
+        if orphaned:
+            messages.info(request, _("Also deleted %d orphaned guardian(s).") % len(orphaned))
+
+    def delete_queryset(self, request, queryset):
+        orphaned = self._find_orphaned_guardians(queryset)
+        super().delete_queryset(request, queryset)
+        for g in orphaned:
+            g.delete()
+        if orphaned:
+            messages.info(request, _("Also deleted %d orphaned guardian(s).") % len(orphaned))
+
+    def delete_selected(self, request, queryset):
+        response = default_delete_selected(self, request, queryset)
+        if response and hasattr(response, 'context_data'):
+            response.context_data['delete_guardians'] = self._find_orphaned_guardians(queryset)
+        return response
+    delete_selected.short_description = default_delete_selected.short_description
 
 
 admin.site.register(Student, StudentAdmin)
 
 
+class OrphanedContactFilter(admin.SimpleListFilter):
+    title = _("Orphaned")
+    parameter_name = "orphaned"
+
+    def lookups(self, request, model_admin):
+        return [("yes", _("Yes")), ("no", _("No"))]
+
+    def queryset(self, request, queryset):
+        if self.value() == "yes":
+            return queryset.filter(
+                kind="prs", is_teammember=False, is_societymember=False
+            ).annotate(num_students=Count("students")).filter(num_students=0)
+        elif self.value() == "no":
+            return queryset.filter(kind="prs").annotate(
+                num_students=Count("students")).exclude(num_students=0)
+
+class OtherKindFilter(admin.SimpleListFilter):
+    title = _("Other Kind")
+    parameter_name = "other_kind"
+
+    def lookups(self, request, model_admin):
+        values = Contact.objects.exclude(other_kind="").values_list("other_kind", flat=True).distinct().order_by("other_kind")
+        return [(v, v) for v in values]
+
+    def queryset(self, request, queryset):
+        if self.value():
+            return queryset.filter(other_kind=self.value())
+
 class ContactAdmin(admin.ModelAdmin):
     model = Contact
-    list_display = ("name","first_name","kind","phone_number","cellphone_number","email_address", "student_links")
+    list_display = ("name","first_name","kind","other_kind","phone_number","cellphone_number","email_address", "student_links")
     search_fields = ["name", "first_name"]
-    list_filter = ("kind","is_teammember")
+    list_filter = ("kind",OtherKindFilter,"is_teammember",OrphanedContactFilter)
+    actions = ["delete_selected"]
     readonly_fields = ("student_links","mentee_links")
 
     def get_fields(self, request, obj=None):
-#            return ("name", "first_name", "kind", "address", "phone_number", "cellphone_number", "email_address", "on_address_list", "is_teammember", "team_email_address", "note", "student_links")
-        fields = ("name", "first_name", "kind", "address", "phone_number", "cellphone_number", "email_address", "on_address_list", "is_teammember", "is_societymember")
+        fields = ("name", "first_name", "kind", "other_kind", "address", "phone_number", "cellphone_number", "email_address", "on_address_list", "is_teammember", "is_societymember")
         if obj and obj.is_teammember:
             fields += ("team_email_address","mentee_links")
         fields += ("note", "student_links")

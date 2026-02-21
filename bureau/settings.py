@@ -33,7 +33,7 @@ SECRET_KEY = 'wxemd+!lwyv6f!$8ps!c+@dby@v_83&9bhzxsqhjn6c*k%7tw@'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ["localhost","bureau","d.labenz"]
+ALLOWED_HOSTS = ["localhost","127.0.0.1","bureau","d.labenz"]
 
 
 # See: https://docs.djangoproject.com/en/dev/ref/settings/#language-code
@@ -111,7 +111,7 @@ WSGI_APPLICATION = 'bureau.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': os.path.join('/data', 'db.sqlite3'),
+        'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
     }
 }
 

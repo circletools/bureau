@@ -403,11 +403,18 @@ def student_report(request):
 	if today.month <= 1:
 		period_start = date(year-1, 7, 31)
 	elif today.month < 8:
-		period_start = date(year, 1, 31) 
+		period_start = date(year, 1, 31)
 	else:
 		period_start = date(year, 7, 31)
 
 	period_end = today;
+
+	if request.GET.get("period") == "previous":
+		period_end = period_start
+		if period_end.month == 7:
+			period_start = date(period_end.year, 1, 31)
+		else:
+			period_start = date(period_end.year - 1, 7, 31)
 
 	students_that_left = []
 	students_that_came = []
@@ -532,8 +539,8 @@ def student_report_row(sheet, student, row):
 			first_guardian_name = guardian.name;
 			guardian_names.append(guardian.first_name + " " + guardian.name);
 
-		if guardian.address != student.address:
-			other_address = "%s %s, %s, %s %s  " % (guardian.first_name, guardian.name, 
+		if guardian.address and guardian.address != student.address:
+			other_address = "%s %s, %s, %s %s  " % (guardian.first_name, guardian.name,
 				guardian.address.street, guardian.address.postal_code, guardian.address.city)
 
 	guardian_names.reverse()
