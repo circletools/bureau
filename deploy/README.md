@@ -8,7 +8,8 @@ commands are documented in the main README, section
   credentials, exports an API key, writes `~/.config/rclone/rclone.conf`.
   Rerun after a filen password change.
 - `db_backup.sh` — nightly cron job (05:00 UTC). Dumps, verifies, uploads to
-  filen.io, keeps 7 days locally.
+  filen.io, keeps 7 days locally. Pings healthchecks.io if `~/.hc_backup_url`
+  exists (mode 600, one line, not in git).
 - `migrate_backlog.sh` — one-off, already run 2026-08-19. Uploaded the pre-filen
   local dumps to `filen:bureau-backups/legacy/`.
 

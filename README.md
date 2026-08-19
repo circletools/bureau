@@ -162,9 +162,16 @@ chmod +x ~/bin/filen
 '''
 0 5 * * * bash /home/infinita/db_backup.sh >> /home/infinita/backups/backup.log
 '''
-  stdout goes to the log, stderr to cron mail (`/var/mail/infinita`). there is
-  no active alerting — a healthchecks.io style dead-man's-switch is the obvious
-  next step, since the dropbox breakage went unnoticed for ~2.5 years.
+  stdout goes to the log, stderr to cron mail (`/var/mail/infinita`).
+
+- alerting: healthchecks.io dead-man's-switch. the script pings start / success
+  / exit-code, so both a failed run and a run that never happens raise an alert.
+  the ping URL lives in `~/.hc_backup_url` (mode 600, not in git); if that file
+  is missing the script still runs, just without pings. check period 1 day.
+
+  server mail is not used for alerting: postfix delivers direct-to-MX with no
+  DKIM and no DMARC for infinita.circletools.org (SPF does list s30), and
+  microsoft 365 junks it — verified 2026-08-19 with two test messages.
 
 remote layout on filen (the school's filen account):
 '''
